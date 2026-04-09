@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eulyph — AI Programming Language</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #050A14;
+    --bg2: #080f1e;
+    --surface: rgba(255,255,255,0.04);
+    --border: rgba(99,179,255,0.15);
+    --blue: #4A9EF8;
+    --blue-dim: #1a4a8a;
+    --teal: #00E5C4;
+    --text: #E8F0FF;
+    --text-dim: #7A8FAD;
+    --font-mono: 'Courier New', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── animated grid background ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(74,158,248,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(74,158,248,0.06) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── scan-line pulse ── */
+  body::after {
+    content: '';
+    position: fixed;
+    left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(74,158,248,0.5), rgba(0,229,196,0.5), transparent);
+    animation: scan 6s linear infinite;
+    pointer-events: none;
+    z-index: 1;
+    top: 0;
+  }
+  @keyframes scan { 0% { top: -2px; } 100% { top: 100vh; } }
+
+  /* ── layout ── */
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 2; }
+
+  /* ── nav ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(5,10,20,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+  }
+  nav .inner { max-width: 960px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; }
+  .nav-logo { font-family: var(--font-mono); font-size: 20px; font-weight: 700; color: var(--blue); letter-spacing: 2px; text-decoration: none; }
+  .nav-logo span { color: var(--teal); }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 14px; transition: color .2s; }
+  .nav-links a:hover { color: var(--text); }
+
+  /* ── hero ── */
+  .hero { padding: 110px 0 80px; text-align: center; }
+  .hero-badge {
+    display: inline-block;
+    border: 1px solid var(--border);
+    background: rgba(74,158,248,0.08);
+    color: var(--blue);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 16px;
+    border-radius: 20px;
+    margin-bottom: 28px;
+    font-family: var(--font-mono);
+  }
+  .hero h1 {
+    font-size: clamp(52px, 8vw, 88px);
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 6px;
+    background: linear-gradient(135deg, #fff 0%, var(--blue) 55%, var(--teal) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-tagline { font-size: clamp(16px, 2.5vw, 22px); color: var(--text-dim); margin-bottom: 20px; }
+  .hero-desc { max-width: 580px; margin: 0 auto 40px; font-size: 16px; color: var(--text-dim); line-height: 1.8; }
+  .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 60px; }
+  .btn-primary {
+    background: var(--blue);
+    color: #fff;
+    border: none;
+    padding: 13px 32px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background .15s, transform .1s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: #3080d0; transform: translateY(-1px); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--blue);
+    border: 1px solid var(--border);
+    padding: 13px 32px;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background .15s;
+  }
+  .btn-ghost:hover { background: rgba(74,158,248,0.08); }
+
+  /* ── terminal code block ── */
+  .terminal {
+    background: #0a0f1a;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: left;
+  }
+  .terminal-bar {
+    background: #0d1525;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: #ff5f57; }
+  .dot-y { background: #febc2e; }
+  .dot-g { background: #28c840; }
+  .terminal-title { flex: 1; text-align: center; font-size: 12px; color: var(--text-dim); font-family: var(--font-mono); }
+  .terminal-body { padding: 24px 28px; font-family: var(--font-mono); font-size: 14px; line-height: 1.9; }
+  .cm { color: #4a5e7a; }
+  .kw { color: #ff7b72; }
+  .sym-at { color: var(--blue); font-weight: 900; font-size: 16px; }
+  .sym-q { color: var(--teal); font-weight: 900; font-size: 16px; }
+  .str { color: #a5d6ff; }
+  .fn { color: #d2a8ff; }
+  .pl { color: #ffa657; }
+  .out { color: #3fb950; }
+  .cursor { display: inline-block; width: 8px; height: 14px; background: var(--blue); animation: blink 1.2s step-end infinite; vertical-align: middle; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* ── sections ── */
+  section { padding: 80px 0; }
+  .section-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 10px;
+  }
+  .section-title { font-size: clamp(26px, 4vw, 38px); font-weight: 700; margin-bottom: 12px; line-height: 1.2; }
+  .section-desc { color: var(--text-dim); font-size: 16px; max-width: 580px; margin-bottom: 44px; line-height: 1.8; }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  /* ── feature cards ── */
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    transition: border-color .2s, background .2s;
+  }
+  .card:hover { border-color: rgba(74,158,248,0.4); background: rgba(74,158,248,0.06); }
+  .card-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    margin-bottom: 16px;
+    background: rgba(74,158,248,0.08);
+  }
+  .card h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; color: var(--text); }
+  .card p { font-size: 13px; color: var(--text-dim); line-height: 1.65; }
+
+  /* ── symbol section ── */
+  .symbol-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .sym-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+  }
+  .sym-char { font-family: var(--font-mono); font-size: 52px; font-weight: 900; line-height: 1; margin-bottom: 12px; }
+  .sym-char.at { color: var(--blue); text-shadow: 0 0 30px rgba(74,158,248,0.4); }
+  .sym-char.q  { color: var(--teal); text-shadow: 0 0 30px rgba(0,229,196,0.4); }
+  .sym-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+  .sym-card p { font-size: 13px; color: var(--text-dim); line-height: 1.65; margin-bottom: 14px; }
+  .mini-terminal {
+    background: #08101e;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  /* ── engine steps ── */
+  .engine-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+  .engine-step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .step-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--blue);
+    letter-spacing: .1em;
+    margin-bottom: 8px;
+  }
+  .engine-step h3 { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .engine-step p { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
+
+  /* ── use cases ── */
+  .use-cases { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+  .use-case {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+  }
+  .use-case-icon { font-size: 22px; margin-bottom: 12px; }
+  .use-case h3 { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .use-case p { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+
+  /* ── FAQ ── */
+  .faq { display: flex; flex-direction: column; gap: 10px; }
+  .faq-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+    cursor: pointer;
+    transition: border-color .2s;
+  }
+  .faq-item:hover { border-color: rgba(74,158,248,0.35); }
+  .faq-q { font-size: 14px; font-weight: 600; color: var(--text); display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .faq-arrow { color: var(--blue); font-size: 16px; transition: transform .2s; flex-shrink: 0; }
+  .faq-item.open .faq-arrow { transform: rotate(90deg); }
+  .faq-a { font-size: 13px; color: var(--text-dim); line-height: 1.7; margin-top: 10px; display: none; }
+  .faq-item.open .faq-a { display: block; }
+
+  /* ── team ── */
+  .team-chips { display: flex; gap: 10px; flex-wrap: wrap; }
+  .chip {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    padding: 8px 16px 8px 10px;
+    font-size: 13px;
+  }
+  .avatar {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--blue-dim);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: var(--blue);
+  }
+
+  /* ── footer ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 0;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    position: relative; z-index: 2;
+  }
+  footer span { color: var(--blue); }
+
+  /* ── responsive ── */
+  @media (max-width: 560px) {
+    .symbol-pair { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="inner">
+    <a class="nav-logo" href="#">Eu<span>lyph</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#symbols">Syntax</a></li>
+      <li><a href="#engine">Engine</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#team">Team</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">&#x25B6; AI-Native Programming Language</div>
+    <h1>Eulyph</h1>
+    <div class="hero-tagline">Where fluid human intent meets rigid computer logic</div>
+    <div class="hero-desc">A brand-new language built from scratch. AI isn't bolted on — it's baked into the syntax. Write intent, not mechanics.</div>
+    <div class="hero-btns">
+      <a href="#about" class="btn-primary">Explore the language</a>
+      <a href="#symbols" class="btn-ghost">See the syntax →</a>
+    </div>
+
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span class="dot dot-r"></span>
+        <span class="dot dot-y"></span>
+        <span class="dot dot-g"></span>
+        <span class="terminal-title">eulyph ~ helpdesk_router.eu</span>
+      </div>
+      <div class="terminal-body">
+        <div><span class="cm"># Mandatory AI handshake</span></div>
+        <div><span class="kw">import</span> <span class="pl">std.stdy</span>()</div>
+        <div>&nbsp;</div>
+        <div><span class="cm"># Read raw ticket email</span></div>
+        <div><span class="pl">ticket</span> = <span class="fn">read</span>(<span class="str">"inbox/ticket.txt"</span>)</div>
+        <div>&nbsp;</div>
+        <div><span class="cm"># AI decides the category in one line</span></div>
+        <div><span class="pl">dept</span> = <span class="pl">ticket</span> <span class="sym-q">?</span> <span class="str">"hardware, software, or network?"</span></div>
+        <div>&nbsp;</div>
+        <div><span class="cm"># Extract just the price from messy data</span></div>
+        <div><span class="pl">price</span> = <span class="pl">email_body</span> <span class="sym-at">@</span> <span class="str">"total cost in dollars"</span></div>
+        <div>&nbsp;</div>
+        <div><span class="out">&gt; Routing to: software_team@company.com</span></div>
+        <div><span class="out">&gt; Extracted: $2,500.00</span> <span class="cursor"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-eyebrow">// what is eulyph</div>
+    <div class="section-title">Code that actually understands you</div>
+    <div class="section-desc">Traditional languages are "rigid" — one wrong character and the whole program breaks. Eulyph bridges the gap between how humans think and how computers execute.</div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">&#x1F9E0;</div>
+        <h3>AI at the core</h3>
+        <p>Unlike tools that bolt on AI after the fact, Eulyph has AI built directly into its syntax. The language itself understands intent.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#x26A1;</div>
+        <h3>Dramatically less code</h3>
+        <p>Replace 200 lines of rigid if/then logic with a handful of intent-driven lines. Eulyph condenses complexity into clarity.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#x1F6E1;&#xFE0F;</div>
+        <h3>Security built in</h3>
+        <p>A mandatory <code>std.stdy()</code> handshake confirms safe AI connection before any code runs. Dangerous functions are hidden behind wrappers.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#x1F9F1;</div>
+        <h3>Modern brain, old infra</h3>
+        <p>Acts as a smart layer on top of existing systems — making legacy tech faster and less fragile without a full rewrite.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SYMBOLS -->
+  <section id="symbols">
+    <div class="section-eyebrow">// the magic symbols</div>
+    <div class="section-title">Two characters that replace thousands of lines</div>
+    <div class="section-desc">Instead of verbose logic, Eulyph gives you two symbols that let you speak directly to the AI engine.</div>
+    <div class="symbol-pair">
+      <div class="sym-card">
+        <div class="sym-char at">@</div>
+        <h3>Inference symbol</h3>
+        <p>Tell the AI to read data and extract exactly what you need. No parsing logic, no regex, no loops — just describe what you want.</p>
+        <div class="mini-terminal">
+          <div><span class="cm"># Extract price from a messy email</span></div>
+          <div><span class="pl">price</span> = <span class="pl">raw_email</span> <span class="sym-at">@</span> <span class="str">"total cost"</span></div>
+          <div><span class="out">&gt; $2,500.00</span></div>
+        </div>
+      </div>
+      <div class="sym-card">
+        <div class="sym-char q">?</div>
+        <h3>Branching symbol</h3>
+        <p>Ask the AI a logical question and let it decide which path to take — based on common sense, not exhaustive if/then chains.</p>
+        <div class="mini-terminal">
+          <div><span class="cm"># Route a support ticket</span></div>
+          <div><span class="pl">dept</span> = <span class="pl">ticket</span> <span class="sym-q">?</span> <span class="str">"hw or sw?"</span></div>
+          <div><span class="out">&gt; software</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- REAL WORLD -->
+  <section id="usecases">
+    <div class="section-eyebrow">// real-world solutions</div>
+    <div class="section-title">What Eulyph can do today</div>
+    <div class="section-desc">Because Eulyph understands natural language, it automates tasks that normally confuse traditional software.</div>
+    <div class="use-cases">
+      <div class="use-case">
+        <div class="use-case-icon">&#x1F4EC;</div>
+        <h3>IT helpdesk router</h3>
+        <p>Reads a raw user email, uses <code>?</code> to classify the issue as hardware, software, or network, then auto-routes the ticket.</p>
+      </div>
+      <div class="use-case">
+        <div class="use-case-icon">&#x1F3E0;</div>
+        <h3>Sorting messy data</h3>
+        <p>A realtor gets a chaotic email with random text and numbers. Eulyph uses <code>@</code> to instantly extract the price — no manual entry.</p>
+      </div>
+      <div class="use-case">
+        <div class="use-case-icon">&#x1F527;</div>
+        <h3>Code modernization</h3>
+        <p>Reads 200 lines of legacy Python and rewrites it as 50–100 lines of clean, intent-driven code. Dozens of if/then rules become one line.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ENGINE -->
+  <section id="engine">
+    <div class="section-eyebrow">// under the hood</div>
+    <div class="section-title">A custom engine, built from scratch</div>
+    <div class="section-desc">Four components work together to make Eulyph's fluid-to-rigid translation possible.</div>
+    <div class="engine-grid">
+      <div class="engine-step">
+        <div class="step-num">01 // LEXER</div>
+        <h3>The reader</h3>
+        <p>Scans raw code, strips whitespace, and identifies special tokens and symbols before anything else runs.</p>
+      </div>
+      <div class="engine-step">
+        <div class="step-num">02 // PARSER</div>
+        <h3>The architect</h3>
+        <p>Takes those symbols and builds an Abstract Syntax Tree — a structural blueprint of the program's logic.</p>
+      </div>
+      <div class="engine-step">
+        <div class="step-num">03 // EVALUATOR</div>
+        <h3>The engine</h3>
+        <p>Walks through the blueprint step-by-step, running rigid math normally and passing fluid logic to the local AI model.</p>
+      </div>
+      <div class="engine-step">
+        <div class="step-num">04 // STDLIB</div>
+        <h3>The security bridge</h3>
+        <p>Requires a mandatory <code>std.stdy()</code> handshake. Hides dangerous raw execution behind safe, clean wrappers.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="section-eyebrow">// faq</div>
+    <div class="section-title">Common questions</div>
+    <div class="faq">
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q">Why build a new language instead of just adding AI to Python? <span class="faq-arrow">&#x276F;</span></div>
+        <div class="faq-a">Eulyph treats AI as a native part of the language. By baking concepts directly into the syntax with <code>@</code> and <code>?</code>, developers write fluid intent rather than rigid mechanical steps — something no add-on can truly replicate.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q">Is it safe to let an AI run my computer's code? <span class="faq-arrow">&#x276F;</span></div>
+        <div class="faq-a">Yes. A script cannot run without <code>std.stdy()</code> confirming connection to a safe, approved model. Dangerous raw functions are hidden behind secure wrappers to prevent execution of malicious code.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q">How does Eulyph talk to the underlying computer? <span class="faq-arrow">&#x276F;</span></div>
+        <div class="faq-a">Eulyph handles the fluid ambiguity of human language. When hard math or system-level work is needed, it securely delegates that specific task down to a traditional Python environment through the Standard Library.</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- TEAM -->
+  <section id="team">
+    <div class="section-eyebrow">// the team</div>
+    <div class="section-title">Built by</div>
+    <div class="team-chips">
+      <div class="chip"><div class="avatar">IH</div> Isaiah Huus</div>
+      <div class="chip"><div class="avatar">JZ</div> James Zook</div>
+      <div class="chip"><div class="avatar">AI</div> Abid Imtiaz</div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <span>Eulyph</span> &mdash; AI Programming Language &mdash; &copy; 2026
+</footer>
+
+</body>
+</html>
