@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eulyph — AI-Native Programming Language</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #050A14; --bg2: #080f1e;
+    --surface: rgba(255,255,255,0.04);
+    --border: rgba(99,179,255,0.15);
+    --blue: #4A9EF8; --blue-dim: #1a4a8a;
+    --teal: #00E5C4;
+    --text: #E8F0FF; --text-dim: #7A8FAD;
+    --mono: 'Courier New', monospace;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: linear-gradient(rgba(74,158,248,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(74,158,248,0.06) 1px, transparent 1px); background-size: 40px 40px; pointer-events: none; z-index: 0; }
+  body::after { content: ''; position: fixed; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, rgba(74,158,248,0.5), rgba(0,229,196,0.5), transparent); animation: scan 6s linear infinite; pointer-events: none; z-index: 1; top: 0; }
+  @keyframes scan { 0% { top: -2px; } 100% { top: 100vh; } }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 2; }
+
+  nav { position: sticky; top: 0; z-index: 100; background: rgba(5,10,20,0.88); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); padding: 14px 0; }
+  nav .inner { max-width: 980px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .nav-logo { font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--blue); letter-spacing: 2px; text-decoration: none; flex-shrink: 0; }
+  .nav-logo span { color: var(--teal); }
+  .nav-links { display: flex; gap: 4px; list-style: none; flex-wrap: wrap; align-items: center; }
+  .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 13px; padding: 6px 12px; border-radius: 6px; transition: color .2s, background .2s; }
+  .nav-links a:hover { color: var(--text); background: rgba(74,158,248,0.08); }
+  .nav-cta { background: var(--blue) !important; color: #fff !important; font-weight: 600; border-radius: 7px !important; }
+  .nav-cta:hover { background: #3080d0 !important; }
+
+  .hero { padding: 110px 0 80px; text-align: center; }
+  .hero-badge { display: inline-block; border: 1px solid var(--border); background: rgba(74,158,248,0.08); color: var(--blue); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 16px; border-radius: 20px; margin-bottom: 28px; font-family: var(--mono); }
+  .hero h1 { font-size: clamp(52px, 8vw, 88px); font-weight: 800; letter-spacing: -2px; line-height: 1; margin-bottom: 6px; background: linear-gradient(135deg, #fff 0%, var(--blue) 55%, var(--teal) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero-tagline { font-size: clamp(16px, 2.5vw, 22px); color: var(--text-dim); margin-bottom: 20px; }
+  .hero-desc { max-width: 600px; margin: 0 auto 40px; font-size: 16px; color: var(--text-dim); line-height: 1.8; }
+  .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+  .btn-primary { background: var(--blue); color: #fff; border: none; padding: 13px 32px; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; transition: background .15s, transform .1s; }
+  .btn-primary:hover { background: #3080d0; transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: var(--blue); border: 1px solid var(--border); padding: 13px 32px; border-radius: 8px; font-size: 15px; cursor: pointer; text-decoration: none; display: inline-block; transition: background .15s; }
+  .btn-ghost:hover { background: rgba(74,158,248,0.08); }
+  .license-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(0,229,196,0.08); border: 1px solid rgba(0,229,196,0.2); color: var(--teal); font-size: 12px; font-family: var(--mono); padding: 4px 12px; border-radius: 20px; }
+
+  .terminal { background: #0a0f1a; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; max-width: 680px; margin: 40px auto 0; text-align: left; }
+  .terminal-bar { background: #0d1525; padding: 10px 16px; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid var(--border); }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: #ff5f57; } .dot-y { background: #febc2e; } .dot-g { background: #28c840; }
+  .terminal-title { flex: 1; text-align: center; font-size: 12px; color: var(--text-dim); font-family: var(--mono); }
+  .terminal-body { padding: 22px 28px; font-family: var(--mono); font-size: 13px; line-height: 2; }
+  .cm { color: #4a5e7a; } .kw { color: #ff7b72; }
+  .sym-at { color: var(--blue); font-weight: 900; }
+  .sym-q  { color: var(--teal); font-weight: 900; }
+  .str { color: #a5d6ff; } .fn { color: #d2a8ff; } .pl { color: #ffa657; } .out { color: #3fb950; }
+  .cursor { display: inline-block; width: 8px; height: 14px; background: var(--blue); animation: blink 1.2s step-end infinite; vertical-align: middle; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  section { padding: 80px 0; }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+  .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); margin-bottom: 10px; }
+  .sec-title { font-size: clamp(26px, 4vw, 38px); font-weight: 700; margin-bottom: 12px; line-height: 1.2; }
+  .sec-desc { color: var(--text-dim); font-size: 15px; max-width: 600px; margin-bottom: 40px; line-height: 1.8; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; transition: border-color .2s, background .2s; }
+  .card:hover { border-color: rgba(74,158,248,0.4); background: rgba(74,158,248,0.05); }
+  .card-icon { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 17px; margin-bottom: 16px; background: rgba(74,158,248,0.08); }
+  .card h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+  .card p { font-size: 13px; color: var(--text-dim); line-height: 1.65; }
+  .card code { font-size: 12px; background: rgba(74,158,248,0.1); padding: 1px 5px; border-radius: 3px; color: var(--blue); }
+
+  .dual { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .track { border-radius: 12px; padding: 28px; border: 1px solid; }
+  .fluid-track { background: rgba(74,158,248,0.06); border-color: rgba(74,158,248,0.25); }
+  .rigid-track { background: rgba(0,229,196,0.05); border-color: rgba(0,229,196,0.2); }
+  .track-eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 10px; }
+  .fluid-track .track-eyebrow { color: var(--blue); }
+  .rigid-track .track-eyebrow { color: var(--teal); }
+  .track h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+  .track p { font-size: 13px; color: var(--text-dim); line-height: 1.65; margin-bottom: 14px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { font-family: var(--mono); font-size: 11px; padding: 3px 10px; border-radius: 20px; }
+  .tag-b { background: rgba(74,158,248,0.15); color: var(--blue); border: 1px solid rgba(74,158,248,0.2); }
+  .tag-t { background: rgba(0,229,196,0.1); color: var(--teal); border: 1px solid rgba(0,229,196,0.2); }
+
+  .sym-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .sym-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; }
+  .sym-char { font-family: var(--mono); font-size: 52px; font-weight: 900; line-height: 1; margin-bottom: 12px; }
+  .sym-char.at { color: var(--blue); text-shadow: 0 0 30px rgba(74,158,248,0.35); }
+  .sym-char.q  { color: var(--teal); text-shadow: 0 0 30px rgba(0,229,196,0.35); }
+  .sym-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+  .sym-card p  { font-size: 13px; color: var(--text-dim); line-height: 1.65; margin-bottom: 14px; }
+  .mini { background: #08101e; border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; font-family: var(--mono); font-size: 12px; line-height: 1.9; }
+
+  .engine-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 14px; }
+  .e-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+  .e-num { font-family: var(--mono); font-size: 11px; color: var(--blue); letter-spacing: .1em; margin-bottom: 8px; }
+  .e-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .e-card p  { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
+  .e-card code { font-size: 11px; background: rgba(74,158,248,0.1); padding: 1px 5px; border-radius: 3px; color: var(--blue); }
+
+  .future-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; }
+  .f-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+  .f-icon { font-size: 20px; margin-bottom: 10px; }
+  .f-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .f-card p  { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
+
+  .faq { display: flex; flex-direction: column; gap: 10px; }
+  .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 22px; cursor: pointer; transition: border-color .2s; }
+  .faq-item:hover { border-color: rgba(74,158,248,0.35); }
+  .faq-q { font-size: 14px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .faq-arrow { color: var(--blue); transition: transform .2s; flex-shrink: 0; }
+  .faq-item.open .faq-arrow { transform: rotate(90deg); }
+  .faq-a { font-size: 13px; color: var(--text-dim); line-height: 1.7; margin-top: 10px; display: none; }
+  .faq-item.open .faq-a { display: block; }
+
+  .team-chips { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+  .chip { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 30px; padding: 8px 16px 8px 10px; font-size: 13px; }
+  .avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--blue-dim); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: var(--blue); }
+
+  .gh-banner { background: rgba(74,158,248,0.07); border: 1px solid rgba(74,158,248,0.2); border-radius: 14px; padding: 36px 40px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 80px; }
+  .gh-banner h3 { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+  .gh-banner p  { font-size: 14px; color: var(--text-dim); }
+  .gh-btn { display: inline-flex; align-items: center; gap: 8px; background: #fff; color: #0d1117; padding: 11px 24px; border-radius: 8px; font-size: 14px; font-weight: 700; text-decoration: none; flex-shrink: 0; transition: background .15s; }
+  .gh-btn:hover { background: #e6edf3; }
+  .gh-icon { width: 18px; height: 18px; }
+
+  footer { border-top: 1px solid var(--border); padding: 28px 0; text-align: center; font-family: var(--mono); font-size: 12px; color: var(--text-dim); position: relative; z-index: 2; }
+  footer span { color: var(--blue); }
+  footer a { color: var(--text-dim); text-decoration: none; }
+  footer a:hover { color: var(--blue); }
+
+  @media (max-width: 600px) {
+    .sym-pair, .dual { grid-template-columns: 1fr; }
+    .hide-sm { display: none; }
+    .gh-banner { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="inner">
+    <a class="nav-logo" href="#">Eu<span>lyph</span></a>
+    <ul class="nav-links">
+      <li class="hide-sm"><a href="#about">About</a></li>
+      <li class="hide-sm"><a href="#how-it-works">How it works</a></li>
+      <li class="hide-sm"><a href="#applications">Applications</a></li>
+      <li class="hide-sm"><a href="#future">Future</a></li>
+      <li class="hide-sm"><a href="#faq">FAQ</a></li>
+      <li><a href="https://github.com/YOUR-USERNAME/YOUR-EULYPH-REPO" target="_blank" class="nav-cta">GitHub ↗</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="hero-badge">&#x25B6; Licensed &amp; Proprietary · Eulyph LLC</div>
+    <h1>Eulyph</h1>
+    <div class="hero-tagline">The AI-Native Programming Language</div>
+    <div class="hero-desc">Eulyph bridges the gap between fluid human intent and rigid computer logic. AI isn't bolted on — it's baked into the syntax, so your code understands what you mean, not just what you type.</div>
+    <div class="hero-btns">
+      <a href="https://github.com/YOUR-USERNAME/YOUR-EULYPH-REPO" target="_blank" class="btn-primary">Get Eulyph on GitHub</a>
+      <a href="#about" class="btn-ghost">Learn more &#x2192;</a>
+    </div>
+    <span class="license-badge">&#x1F512; Proprietary License · All rights reserved</span>
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+        <span class="terminal-title">helpdesk_router.eu</span>
+      </div>
+      <div class="terminal-body">
+        <div><span class="cm"># Mandatory AI handshake — required before any inference</span></div>
+        <div><span class="kw">import</span> <span class="pl">std.stdy</span>()</div>
+        <div>&nbsp;</div>
+        <div><span class="cm"># ? operator: classify with AI instead of 100 if/else blocks</span></div>
+        <div><span class="pl">dept</span> = <span class="pl">raw_ticket</span> <span class="sym-q">?</span> <span class="str">"hardware, software, or network?"</span></div>
+        <div>&nbsp;</div>
+        <div><span class="cm"># @ operator: extract exactly what you need from messy data</span></div>
+        <div><span class="pl">price</span> = <span class="pl">email_body</span> <span class="sym-at">@</span> <span class="str">"total cost in dollars"</span></div>
+        <div>&nbsp;</div>
+        <div><span class="cm"># Serve result instantly as a web API</span></div>
+        <div><span class="pl">dept</span>.<span class="fn">serve</span>()</div>
+        <div>&nbsp;</div>
+        <div><span class="out">&gt; Routing to: software_team@company.com</span></div>
+        <div><span class="out">&gt; Extracted: $2,500.00 &nbsp;</span><span class="cursor"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <section id="about">
+    <div class="eyebrow">// what is eulyph</div>
+    <div class="sec-title">Code that understands intent</div>
+    <div class="sec-desc">Traditional languages are brittle — one wrong character and the whole program crashes. Eulyph uses an AI-integrated core to handle ambiguous, natural-language tasks while relying on a secure Python-based engine for precise calculations and system work.</div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">&#x1F9E0;</div>
+        <h3>AI at the core</h3>
+        <p>The <code>@</code> and <code>?</code> operators are first-class syntax — the language itself understands natural language intent, not just characters.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#x26A1;</div>
+        <h3>Radically less code</h3>
+        <p>Replace hundreds of rigid if/else statements with a single line of intent. Eulyph condenses complexity into clarity.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#x1F6E1;&#xFE0F;</div>
+        <h3>Enterprise-ready security</h3>
+        <p>Mandatory <code>std.stdy()</code> confirms the AI connection before anything runs. Raw execution is hidden behind clean, secure wrappers.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#x1F310;</div>
+        <h3>Instant web APIs</h3>
+        <p>Any Eulyph object can be served as a web API with <code>.serve()</code> — enabling instant networking and interoperability with Flask.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section>
+    <div class="eyebrow">// the architecture</div>
+    <div class="sec-title">Fluid intent. Rigid execution.</div>
+    <div class="sec-desc">Eulyph has a deliberate dual-track design. Ambiguous, natural language tasks go one way. Precise, system-level tasks go another. Both work together seamlessly.</div>
+    <div class="dual">
+      <div class="track fluid-track">
+        <div class="track-eyebrow">Fluid track</div>
+        <h3>AI-driven operations</h3>
+        <p>Ambiguous intent — natural language decisions, data extraction, classification — handled by the <code>@</code> and <code>?</code> operators via a local LLM.</p>
+        <div class="tags">
+          <span class="tag tag-b">@ inference</span>
+          <span class="tag tag-b">? branching</span>
+          <span class="tag tag-b">natural language</span>
+          <span class="tag tag-b">LLM-powered</span>
+        </div>
+      </div>
+      <div class="track rigid-track">
+        <div class="track-eyebrow">Rigid track</div>
+        <h3>Precise system logic</h3>
+        <p>Heavy lifting — math, class creation, system architecture, and Python interop — handled through the secure Standard Library with 100% precision.</p>
+        <div class="tags">
+          <span class="tag tag-t">std library</span>
+          <span class="tag tag-t">Python bridge</span>
+          <span class="tag tag-t">native JSON</span>
+          <span class="tag tag-t">Flask / .serve()</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section id="how-it-works">
+    <div class="eyebrow">// how it works</div>
+    <div class="sec-title">The pipeline under the hood</div>
+    <div class="sec-desc">Every Eulyph script passes through five custom-built components that transform raw text into a working software artifact.</div>
+    <div class="engine-grid">
+      <div class="e-card">
+        <div class="e-num">01 // LEXER</div>
+        <h3>Lexical analysis</h3>
+        <p>Scans source code, identifies tokens including the <code>@</code>, <code>?</code>, and cloning <code>:</code> operators. Strips whitespace to produce a clean token stream.</p>
+      </div>
+      <div class="e-card">
+        <div class="e-num">02 // PARSER</div>
+        <h3>Syntax parsing</h3>
+        <p>Uses a Recursive Descent Parser to build an Abstract Syntax Tree — from simple assignments to complex AI-driven question expressions.</p>
+      </div>
+      <div class="e-card">
+        <div class="e-num">03 // EVALUATOR</div>
+        <h3>Execution engine</h3>
+        <p>Walks the AST node-by-node. Maintains a runtime symbol table and routes fluid logic to a local LLM while running rigid code natively.</p>
+      </div>
+      <div class="e-card">
+        <div class="e-num">04 // RUNTIME</div>
+        <h3>Types &amp; runtime</h3>
+        <p>Native <code>Text</code>, <code>URL</code>, and <code>JSON</code> types. Native JSON literals (<code>{}</code>) work directly. Any object is servable as a Flask web API.</p>
+      </div>
+      <div class="e-card">
+        <div class="e-num">05 // STDLIB</div>
+        <h3>Standard library</h3>
+        <p><code>std.stdy()</code> confirms AI connection. <code>_env()</code> hides raw Python. <code>coding_lib</code> and <code>python_import</code> wrappers enforce a clean, secure dev environment.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section id="symbols">
+    <div class="eyebrow">// the magic symbols</div>
+    <div class="sec-title">Two characters. Infinite possibility.</div>
+    <div class="sec-desc">Instead of verbose logic, Eulyph gives you two operators that communicate directly with the AI engine — replacing thousands of lines with a single line of intent.</div>
+    <div class="sym-pair">
+      <div class="sym-card">
+        <div class="sym-char at">@</div>
+        <h3>Inference operator</h3>
+        <p>Extracts exactly what you need from any data — messy emails, massive JSON files, raw text — without parsing logic, regex, or loops. Just describe it in plain language.</p>
+        <div class="mini">
+          <div><span class="cm"># Pull revenue figures from a huge JSON report</span></div>
+          <div><span class="pl">figures</span> = <span class="pl">report</span> <span class="sym-at">@</span> <span class="str">"Q3 revenue"</span></div>
+          <div><span class="out">&gt; { "q3_revenue": "$4.2M" }</span></div>
+        </div>
+      </div>
+      <div class="sym-card">
+        <div class="sym-char q">?</div>
+        <h3>Branching operator</h3>
+        <p>Replaces entire chains of if/else logic with a single AI-powered decision. Ask a natural language question; the LLM decides the path using common sense.</p>
+        <div class="mini">
+          <div><span class="cm"># Route a support ticket — no if/else needed</span></div>
+          <div><span class="pl">dept</span> = <span class="pl">ticket</span> <span class="sym-q">?</span> <span class="str">"hw, sw, or network?"</span></div>
+          <div><span class="out">&gt; software</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section id="applications">
+    <div class="eyebrow">// applications</div>
+    <div class="sec-title">Real-world solutions, today</div>
+    <div class="sec-desc">Because Eulyph understands natural language, it automates tasks that traditionally require brittle, hand-coded logic — across industries.</div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">&#x1F4EC;</div>
+        <h3>IT helpdesk router</h3>
+        <p>Ingests raw support tickets, uses <code>?</code> to classify the issue type, then routes automatically to the correct department API via <code>.serve()</code>.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#x1F4CA;</div>
+        <h3>Data extraction</h3>
+        <p>Takes massive, messy JSON or email data and uses <code>@</code> to pull only the relevant financial or technical figures — zero manual parsing.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#x1F527;</div>
+        <h3>Code modernization</h3>
+        <p>Reads 200 lines of legacy Python and rewrites it as 50–100 lines of clean, intent-driven code. Dozens of if/then rules become one line.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#x1F3E6;</div>
+        <h3>Autonomous auditing</h3>
+        <p>Watches financial feeds and uses <code>?</code> to autonomously flag suspicious transactions for human review — without any hard-coded rules.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section id="future">
+    <div class="eyebrow">// future horizons</div>
+    <div class="sec-title">Where Eulyph is going</div>
+    <div class="sec-desc">The dual-track architecture opens a roadmap of capabilities that traditional languages simply cannot offer.</div>
+    <div class="future-grid">
+      <div class="f-card">
+        <div class="f-icon">&#x1F680;</div>
+        <h3>Multi-language output</h3>
+        <p>Prototype strategy in Eulyph, then compile the high-performance "muscle" into C++ or Rust — ideal for high-frequency trading.</p>
+      </div>
+      <div class="f-card">
+        <div class="f-icon">&#x2695;&#xFE0F;</div>
+        <h3>Industry brains</h3>
+        <p>Specialized libraries like <code>std.legal</code> or <code>std.medical</code> — pre-confirmed AI models trained on expert domain data.</p>
+      </div>
+      <div class="f-card">
+        <div class="f-icon">&#x1F9F1;</div>
+        <h3>Zero-fragility deployment</h3>
+        <p>Because Eulyph refers to intent, not hard-coded names, a business can update its entire backend and scripts keep working without rewrites.</p>
+      </div>
+      <div class="f-card">
+        <div class="f-icon">&#x1F4B9;</div>
+        <h3>Autonomous finance</h3>
+        <p>Expand to watch bank feeds in real time and use <code>?</code> to flag suspicious transactions autonomously for human review.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section id="faq">
+    <div class="eyebrow">// faq</div>
+    <div class="sec-title">Common questions</div>
+    <div class="faq">
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q">Why build a new language instead of just adding AI to Python? <span class="faq-arrow">&#x276F;</span></div>
+        <div class="faq-a">Eulyph treats AI as a native part of the language. By baking <code>@</code> and <code>?</code> directly into the syntax, developers write fluid intent rather than rigid mechanical steps — something no Python add-on can replicate. The language itself understands what you mean.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q">Is it safe to let an AI run my computer's code? <span class="faq-arrow">&#x276F;</span></div>
+        <div class="faq-a">Yes. No script can run without <code>std.stdy()</code> confirming a connection to a safe, approved local model. The raw <code>env()</code> function is renamed to <code>_env()</code> and hidden, forcing all execution through secure <code>coding</code> and <code>python_import</code> wrappers that prevent malicious execution.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q">How does Eulyph interact with existing Python libraries? <span class="faq-arrow">&#x276F;</span></div>
+        <div class="faq-a">Eulyph supports an "extern" mechanism for importing standard Python modules directly — giving access to Python's entire ecosystem. The <code>python_import</code> wrapper handles this securely, and native JSON literals allow complex data to be passed as Python-style keyword arguments with full precision.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q">Is Eulyph ready for production and enterprise use? <span class="faq-arrow">&#x276F;</span></div>
+        <div class="faq-a">Yes — that's a core design goal. The Standard Library, mandatory <code>std.stdy()</code>, secure wrappers, native JSON, and the <code>.serve()</code> web API are all built for production. The dual-track fluid/rigid architecture ensures flexibility for AI tasks and robustness for software engineering.</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section id="team">
+    <div class="eyebrow">// the team</div>
+    <div class="sec-title">Built by</div>
+    <div class="team-chips">
+      <div class="chip"><div class="avatar">IH</div> Isaiah Huus</div>
+      <div class="chip"><div class="avatar">JZ</div> James Zook</div>
+      <div class="chip"><div class="avatar">AI</div> Abid Imtiaz</div>
+    </div>
+    <span class="license-badge">&#x1F512; Eulyph is proprietary software · All rights reserved · Eulyph LLC</span>
+  </section>
+
+  <div class="gh-banner">
+    <div>
+      <h3>Ready to try Eulyph?</h3>
+      <p>View the source, download the package, and follow development on GitHub.</p>
+    </div>
+    <a href="https://github.com/YOUR-USERNAME/YOUR-EULYPH-REPO" target="_blank" class="gh-btn">
+      <svg class="gh-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+      View on GitHub
+    </a>
+  </div>
+
+</div>
+
+<footer>
+  <span>Eulyph</span> &mdash; AI-Native Programming Language &mdash;
+  <a href="https://github.com/YOUR-USERNAME/YOUR-EULYPH-REPO" target="_blank">GitHub</a> &mdash;
+  &copy; 2026 Eulyph LLC · All rights reserved
+</footer>
+
+</body>
+</html>
