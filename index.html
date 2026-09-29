@@ -3,8 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Eulyph — AI-Native Programming Language</title>
-<link rel="icon" type="image/png" href="favicon.png">
+<title>Eulyph — The AI-Native Programming Language</title>
+<meta name="description" content="Eulyph is an AI-native scripting language on a Python runtime. The model is part of the syntax: @ runs inference, ? branches on a question the model answers, and exact work stays in exact code. Built by Eulyph LLC.">
+<link rel="canonical" href="https://www.eulyph.com/">
+<meta name="theme-color" content="#F7F2E9">
+<meta property="og:title" content="Eulyph — The AI-Native Programming Language">
+<meta property="og:description" content="Write the rules you know. Ask about the rest. An AI-native scripting language on a Python runtime, from Eulyph LLC.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.eulyph.com/">
+<meta property="og:image" content="https://www.eulyph.com/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Eulyph — The AI-Native Programming Language">
+<meta name="twitter:description" content="The model is part of the syntax: @ runs inference, ? is the only control flow. Exact work stays in Python.">
+<link rel="icon" type="image/png" href="favicon.png?v=2">
+<link rel="apple-touch-icon" href="favicon.png?v=2">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+ {"@type":"Organization","@id":"https://www.eulyph.com/#org","name":"Eulyph LLC","url":"https://www.eulyph.com/","logo":"https://www.eulyph.com/favicon.png"},
+ {"@type":"SoftwareApplication","name":"Eulyph","url":"https://www.eulyph.com/","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Linux","softwareRequirements":"Python 3.10 or newer","description":"An AI-native scripting language on a Python runtime. The model is part of the syntax: @ runs inference and ? branches on a question the model answers; exact work stays in Python.","author":{"@id":"https://www.eulyph.com/#org"},"publisher":{"@id":"https://www.eulyph.com/#org"}}
+]}
+</script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2DMLV0F32Q"></script>
@@ -14,663 +34,852 @@
     gtag('js', new Date());
     gtag('config', 'G-2DMLV0F32Q');
   </script>
-  <style>
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  :root{
-    --bg:#050A14;--surface:rgba(255,255,255,0.04);
-    --border:rgba(99,179,255,0.15);
-    --blue:#4A9EF8;--blue-dim:#1a4a8a;
-    --teal:#00E5C4;--green:#3fb950;
-    --orange:#ffa657;--purple:#d2a8ff;--red:#ff7b72;
-    --text:#E8F0FF;--text-dim:#7A8FAD;
-    --mono:'Courier New',monospace;
-  }
-  html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden}
-  body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(74,158,248,0.055) 1px,transparent 1px),linear-gradient(90deg,rgba(74,158,248,0.055) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
-  body::after{content:'';position:fixed;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(74,158,248,0.45),rgba(0,229,196,0.45),transparent);animation:scan 7s linear infinite;pointer-events:none;z-index:1;top:0}
-  @keyframes scan{0%{top:-2px}100%{top:100vh}}
-  .wrap{max-width:980px;margin:0 auto;padding:0 24px;position:relative;z-index:2}
 
-  /* NAV */
-  nav{position:sticky;top:0;z-index:100;background:rgba(5,10,20,0.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:13px 0}
-  .nav-inner{max-width:980px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-  .nav-logo{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--blue);letter-spacing:2px;text-decoration:none;flex-shrink:0}
-  .nav-logo span{color:var(--teal)}
-  .nav-links{display:flex;gap:2px;list-style:none;flex-wrap:wrap;align-items:center}
-  .nav-links a{color:var(--text-dim);text-decoration:none;font-size:13px;padding:6px 10px;border-radius:6px;transition:color .2s,background .2s;white-space:nowrap}
-  .nav-links a:hover{color:var(--text);background:rgba(74,158,248,0.08)}
-  .nav-cta{background:var(--blue)!important;color:#fff!important;font-weight:600;border-radius:7px!important}
-  .nav-cta:hover{background:#3080d0!important}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&amp;family=Instrument+Sans:ital,wght@0,400..700;1,400..700&amp;display=swap" rel="stylesheet">
 
-  /* HERO */
-  .hero{padding:100px 0 70px;text-align:center}
-  .hero-badge{display:inline-block;border:1px solid var(--border);background:rgba(74,158,248,0.08);color:var(--blue);font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:5px 16px;border-radius:20px;margin-bottom:24px;font-family:var(--mono)}
-  .hero h1{font-size:clamp(48px,8vw,88px);font-weight:800;letter-spacing:-2px;line-height:1;margin-bottom:8px;background:linear-gradient(135deg,#fff 0%,var(--blue) 55%,var(--teal) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-  .hero-tagline{font-size:clamp(15px,2.5vw,21px);color:var(--text-dim);margin-bottom:16px}
-  .hero-desc{max-width:580px;margin:0 auto 32px;font-size:15px;color:var(--text-dim);line-height:1.8}
-  .hero-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
-  .btn{display:inline-block;text-decoration:none;padding:12px 28px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all .15s}
-  .btn-primary{background:var(--blue);color:#fff}
-  .btn-primary:hover{background:#3080d0;transform:translateY(-1px)}
-  .btn-ghost{background:transparent;color:var(--blue);border:1px solid var(--border)}
-  .btn-ghost:hover{background:rgba(74,158,248,0.08)}
-  .badge-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:44px}
-  .pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-family:var(--mono);padding:4px 12px;border-radius:20px;border:1px solid}
-  .pill-teal{background:rgba(0,229,196,0.07);border-color:rgba(0,229,196,0.2);color:var(--teal)}
-  .pill-blue{background:rgba(74,158,248,0.07);border-color:rgba(74,158,248,0.2);color:var(--blue)}
-  .pill-orange{background:rgba(255,166,87,0.07);border-color:rgba(255,166,87,0.2);color:var(--orange)}
+<style>
+/* ============ tokens ============ */
+:root{
+  --paper:#F7F2E9;
+  --paper-hi:#FDFAF3;
+  --paper-lo:#F1EADC;
+  --ink:#1C1712;
+  --ink-soft:#57504A;
+  --ink-faint:#6F6659;
+  --accent:#C63D1D;
+  --accent-deep:#A5300F;
+  --accent-wash:#F3E0D4;
+  --rule:#E0D6C4;
+  --rule-strong:#CFC3AC;
+  --olive:#55632E;
+  --plate:#211B15;
+  --plate-hi:#F4EDDF;
+  --serif:'Fraunces',Georgia,'Times New Roman',serif;
+  --sans:'Instrument Sans','Segoe UI',system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,'Cascadia Code','SF Mono',Menlo,Consolas,'Liberation Mono',monospace;
+  --r-lg:14px; --r-md:10px; --r-sm:6px;
+  --wrap:1120px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:17px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  border-top:4px solid var(--accent);
+}
+::selection{background:var(--accent);color:var(--paper-hi)}
+::-webkit-scrollbar{width:12px;height:12px}
+::-webkit-scrollbar-track{background:var(--paper)}
+::-webkit-scrollbar-thumb{background:var(--rule-strong);border:3px solid var(--paper);border-radius:8px}
+::-webkit-scrollbar-thumb:hover{background:var(--ink-faint)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+a{color:var(--accent-deep);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{color:var(--accent)}
+img,svg{max-width:100%}
 
-  /* TERMINAL */
-  .terminal{background:#07111f;border:1px solid var(--border);border-radius:12px;overflow:hidden;text-align:left}
-  .t-bar{background:#0c1929;padding:9px 16px;display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--border)}
-  .dot{width:10px;height:10px;border-radius:50%}
-  .dr{background:#ff5f57}.dy{background:#febc2e}.dg{background:#28c840}
-  .t-title{flex:1;text-align:center;font-size:12px;color:var(--text-dim);font-family:var(--mono)}
-  .t-body{padding:20px 24px;font-family:var(--mono);font-size:12.5px;line-height:2}
-  .cm{color:#4a5e7a}.kw{color:var(--red)}
-  .sym-at{color:var(--blue);font-weight:900}.sym-q{color:var(--teal);font-weight:900}.sym-ar{color:var(--teal)}
-  .str{color:#a5d6ff}.fn{color:var(--purple)}.pl{color:var(--orange)}.out{color:var(--green)}
-  .cursor{display:inline-block;width:8px;height:14px;background:var(--blue);animation:blink 1.2s step-end infinite;vertical-align:middle}
-  @keyframes blink{50%{opacity:0}}
+.skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:var(--paper-hi);padding:10px 18px;z-index:200;border-radius:0 0 var(--r-sm) 0}
+.skip:focus{left:0}
 
-  /* LAYOUT */
-  section{padding:76px 0}
-  .divider{border:none;border-top:1px solid var(--border)}
-  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:10px}
-  .sec-title{font-size:clamp(24px,4vw,36px);font-weight:700;margin-bottom:12px;line-height:1.2}
-  .sec-desc{color:var(--text-dim);font-size:15px;max-width:620px;margin-bottom:36px;line-height:1.8}
-  code{font-size:11.5px;background:rgba(74,158,248,0.1);padding:1px 6px;border-radius:3px;color:var(--blue);font-family:var(--mono)}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 clamp(20px,4.5vw,48px)}
+section{padding:clamp(72px,9vw,120px) 0}
+.prose{max-width:68ch}
 
-  /* GRIDS */
-  .g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-  .g4{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
-  .g4-sm{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:12px}
+/* ============ type ============ */
+h1,h2,.pull-quote{font-family:var(--serif);font-weight:560;letter-spacing:-0.015em;line-height:1.06;text-wrap:balance}
+h1{font-size:clamp(44px,8.6vw,102px);font-optical-sizing:auto}
+h2{font-size:clamp(32px,4.6vw,54px);margin-bottom:22px}
+h3{font-size:19px;font-weight:650;letter-spacing:-0.01em;line-height:1.35}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:18px;display:flex;align-items:center;gap:12px}
+.eyebrow::before{content:'';width:34px;height:2px;background:var(--accent);flex:none}
+.lede{font-size:clamp(17.5px,2vw,20px);line-height:1.75;color:var(--ink-soft);max-width:68ch}
+.lede strong{color:var(--ink)}
+.dropcap::first-letter{font-family:var(--serif);font-weight:600;font-size:3.55em;line-height:.78;float:left;padding:8px 12px 0 0;color:var(--accent)}
+.uline{font-style:italic;color:var(--accent);background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 16' preserveAspectRatio='none'%3E%3Cpath d='M4 11 C 42 3 74 14 112 8 S 182 4 216 10' fill='none' stroke='%23C63D1D' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat 0 100%/100% .14em;padding-bottom:.12em}
+code{font-family:var(--mono);font-size:.86em;background:var(--paper-lo);border:1px solid var(--rule);border-radius:var(--r-sm);padding:1px 6px;white-space:nowrap}
+pre,code,.mini{font-variant-ligatures:none;font-feature-settings:'liga' 0,'calt' 0}
+.hero-cols>*,.case-cols>*,.qs-cols>*,.op-grid>*,.ledger>*,.mod-row>*,.road-row>*,.lic-grid>*,.pipe-fan>*,.case-stats>*,.spread>*{min-width:0}
 
-  /* CARDS */
-  .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;transition:border-color .2s,background .2s}
-  .card:hover{border-color:rgba(74,158,248,0.3);background:rgba(74,158,248,0.04)}
-  .card-icon{width:36px;height:36px;border-radius:8px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:15px;margin-bottom:12px;background:rgba(74,158,248,0.08)}
-  .card h3{font-size:14px;font-weight:600;margin-bottom:6px}
-  .card p{font-size:13px;color:var(--text-dim);line-height:1.65}
+.rv-init{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
+.rv-init.in{opacity:1;transform:none}
 
-  /* OPERATOR CARDS */
-  .op-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px}
-  .op-sym{font-family:var(--mono);font-size:40px;font-weight:900;line-height:1;margin-bottom:10px}
-  .op-at{color:var(--blue);text-shadow:0 0 28px rgba(74,158,248,0.3)}
-  .op-q{color:var(--teal);text-shadow:0 0 28px rgba(0,229,196,0.3)}
-  .op-card h3{font-size:15px;font-weight:600;margin-bottom:3px}
-  .op-sub{font-size:11px;font-family:var(--mono);color:var(--text-dim);margin-bottom:10px}
-  .op-card p{font-size:13px;color:var(--text-dim);line-height:1.65;margin-bottom:12px}
-  .mini{background:#07111f;border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-family:var(--mono);font-size:11.5px;line-height:1.9}
+/* ============ header ============ */
+.site-head{position:sticky;top:0;z-index:100;background:rgba(247,242,233,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.head-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:14px;padding-bottom:14px}
+.brand{font-family:var(--serif);font-weight:640;font-size:23px;letter-spacing:-.02em;color:var(--ink);text-decoration:none}
+.brand em{font-style:italic;color:var(--accent)}
+.site-head nav ul{display:flex;flex-wrap:wrap;gap:2px 4px;list-style:none;align-items:center;justify-content:flex-end}
+.site-head nav a{font-size:14px;color:var(--ink-soft);text-decoration:none;padding:6px 11px;border-radius:999px;white-space:nowrap}
+.site-head nav a:hover{color:var(--ink);background:var(--paper-lo)}
+.site-head nav a.active{color:var(--accent-deep);background:var(--accent-wash);font-weight:600}
+.site-head nav a.gh{border:1px solid var(--rule-strong);color:var(--ink);font-weight:600;margin-left:6px}
+.site-head nav a.gh:hover{border-color:var(--ink);background:var(--paper-hi)}
 
-  /* FILE CARDS */
-  .file-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px}
-  .file-name{font-family:var(--mono);font-size:13px;color:var(--blue);margin-bottom:2px;font-weight:700}
-  .file-role{font-size:11px;color:var(--text-dim);font-style:italic;margin-bottom:9px}
-  .file-card h3{font-size:13px;font-weight:600;margin-bottom:5px}
-  .file-card p{font-size:12px;color:var(--text-dim);line-height:1.6}
+/* ============ hero ============ */
+.hero{padding-top:clamp(64px,8vw,110px)}
+.hero h1{margin-bottom:clamp(28px,4vw,44px);max-width:15ch}
+.hero-cols{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(28px,4vw,56px);align-items:start}
+.hero-note{font-size:14px;color:var(--ink-faint);margin-top:16px;max-width:44ch}
+.btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.btn{display:inline-block;font-weight:640;font-size:15px;text-decoration:none;padding:13px 26px;border-radius:999px;letter-spacing:.01em}
+.btn-solid{background:var(--ink);color:var(--paper-hi);border:1.5px solid var(--ink)}
+.btn-solid:hover{background:var(--accent);border-color:var(--accent);color:var(--paper-hi)}
+.btn-line{color:var(--ink);border:1.5px solid var(--rule-strong);background:transparent}
+.btn-line:hover{border-color:var(--ink);color:var(--ink)}
+.stat-strip{display:flex;flex-wrap:wrap;gap:8px 26px;margin-top:38px;padding-top:22px;border-top:1px solid var(--rule);font-family:var(--mono);font-size:13px;color:var(--ink-soft)}
+.stat-strip b{color:var(--accent-deep);font-weight:700}
 
-  /* IT CASE STUDY */
-  .case-banner{background:rgba(0,229,196,0.04);border:1px solid rgba(0,229,196,0.18);border-radius:14px;padding:20px 24px;margin-bottom:24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-  .case-tag{font-family:var(--mono);font-size:11px;color:var(--teal);background:rgba(0,229,196,0.08);border:1px solid rgba(0,229,196,0.2);padding:4px 12px;border-radius:20px;letter-spacing:.1em;text-transform:uppercase;flex-shrink:0}
-  .case-banner p{font-size:13px;color:var(--text-dim);line-height:1.6}
+/* ============ code cards ============ */
+.code-card{background:var(--paper-hi);border:1px solid var(--rule);border-radius:var(--r-lg);box-shadow:0 1px 0 var(--rule),0 18px 40px -28px rgba(60,40,20,.35);overflow:hidden}
+.code-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 18px;border-bottom:1px solid var(--rule);font-family:var(--mono);font-size:12px;color:var(--ink-faint);letter-spacing:.06em}
+.code-head b{color:var(--ink-soft);font-weight:600}
+#qs-head{justify-content:flex-start}
+#qs-head b{margin-right:auto}
+.code-card pre{padding:20px 0 22px;overflow-x:auto;font-family:var(--mono);font-size:13.5px;line-height:1.85;color:var(--ink)}
+.code-card pre .ln{display:block;padding:0 22px}
+.code-card pre .ln:empty::before{content:"\a0"} /* blank line keeps its height but copies as a real empty line */
+.code-card pre .ai{background:rgba(198,61,29,.075);box-shadow:inset 3px 0 0 var(--accent)}
+.cm{color:#6F6457;font-style:italic}
+.st{color:var(--olive)}
+.kw{color:var(--ink);font-weight:700}
+.op{color:var(--accent);font-weight:700}
+.fn{color:#7A3B12}
+.caret{display:inline-block;width:9px;height:1.05em;background:var(--accent);vertical-align:text-bottom;animation:blink 1.15s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+.copy-btn{font-family:var(--sans);font-size:12.5px;font-weight:600;letter-spacing:.01em;color:var(--ink-soft);background:var(--paper);border:1px solid var(--rule-strong);border-radius:999px;padding:5px 14px;cursor:pointer;transition:color .15s ease,border-color .15s ease}
+.copy-btn:hover{color:var(--ink);border-color:var(--ink)}
+.copy-btn.done{color:var(--accent-deep);border-color:var(--accent)}
 
-  .impact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
-  .impact-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px}
-  .impact-card .imp-icon{font-size:22px;margin-bottom:10px}
-  .impact-card h3{font-size:14px;font-weight:600;margin-bottom:6px}
-  .impact-card p{font-size:12px;color:var(--text-dim);line-height:1.6}
+/* ============ tracks spread ============ */
+.tracks-head{text-align:center;max-width:760px;margin:0 auto clamp(40px,5vw,64px)}
+.tracks-head .eyebrow{justify-content:center}
+.tracks-head .eyebrow::after{content:'';width:34px;height:2px;background:var(--accent)}
+.spread{position:relative;display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--rule-strong);border-radius:var(--r-lg);overflow:hidden;background:var(--paper-hi)}
+.track{padding:clamp(30px,4vw,56px);position:relative;overflow:hidden;min-width:0}
+.track-fluid{background:linear-gradient(160deg,#FBF3E8 0%,#F7E7D6 100%)}
+.track-rigid{
+  background:
+    repeating-linear-gradient(0deg,rgba(148,134,106,.16) 0 1px,transparent 1px 28px),
+    repeating-linear-gradient(90deg,rgba(148,134,106,.16) 0 1px,transparent 1px 28px),
+    #FBF8F1;
+  border-left:1px dashed var(--rule-strong);
+}
+.track-glyph{position:absolute;right:-14px;top:-44px;font-family:var(--serif);font-style:italic;font-weight:560;font-size:clamp(150px,17vw,240px);line-height:1;color:rgba(198,61,29,.16);user-select:none;pointer-events:none}
+.track-rigid .track-glyph{font-family:var(--mono);font-style:normal;font-weight:700;color:rgba(28,23,18,.09);right:6px;top:-30px;letter-spacing:-.06em}
+.blob{position:absolute;left:-70px;bottom:-90px;width:300px;height:300px;pointer-events:none}
+.track-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px}
+.track-fluid .track-label{color:var(--accent-deep)}
+.track-rigid .track-label{color:var(--ink-soft)}
+.track h3{font-family:var(--serif);font-size:clamp(24px,2.6vw,32px);font-weight:560;letter-spacing:-.01em;margin-bottom:12px;position:relative}
+.track-fluid h3{font-style:italic}
+.track p{font-size:15.5px;color:var(--ink-soft);max-width:46ch;position:relative;margin-bottom:18px}
+.track .mini{position:relative;background:rgba(253,250,243,.85);border:1px solid var(--rule);border-radius:var(--r-md);padding:14px 18px;font-family:var(--mono);font-size:12.5px;line-height:1.9;overflow-x:auto;white-space:pre}
+.track-rigid .mini{background:rgba(253,250,243,.92)}
+.seam{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:96px;height:96px;border-radius:50%;background:var(--ink);color:var(--paper-hi);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:560;font-size:52px;border:5px solid var(--paper);box-shadow:0 10px 26px -12px rgba(30,20,10,.5);z-index:5}
+.seam-note{text-align:center;font-size:15px;color:var(--ink-soft);max-width:56ch;margin:26px auto 0;font-style:italic;font-family:var(--serif);font-size:17.5px}
+.seam-note .op{font-style:normal}
 
-  .demo-split{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;margin-bottom:24px}
+/* operator cards */
+.op-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:clamp(40px,5vw,60px)}
+.op-card{background:var(--paper-hi);border:1px solid var(--rule);border-radius:var(--r-lg);padding:clamp(24px,3vw,36px);display:flex;flex-direction:column;gap:12px}
+.op-big{font-family:var(--serif);font-size:64px;line-height:1;color:var(--accent);font-weight:560}
+.op-card h3{font-size:20px}
+.op-kicker{font-family:var(--mono);font-size:12px;color:var(--ink-faint);letter-spacing:.1em;text-transform:uppercase}
+.op-card p{font-size:15.5px;color:var(--ink-soft)}
+.op-card .mini{background:var(--paper);border:1px solid var(--rule);border-radius:var(--r-md);padding:14px 18px;font-family:var(--mono);font-size:12.5px;line-height:1.9;overflow-x:auto;white-space:pre;margin-top:auto}
 
-  /* DEPT KEYWORD TABLE */
-  .dept-table{width:100%;border-collapse:collapse;font-size:12px;font-family:var(--mono)}
-  .dept-table th{text-align:left;padding:8px 12px;border-bottom:1px solid var(--border);color:var(--text-dim);font-weight:500;font-size:11px;letter-spacing:.06em}
-  .dept-table td{padding:7px 12px;border-bottom:1px solid rgba(99,179,255,0.07);vertical-align:top}
-  .dept-table td:first-child{color:var(--teal);font-weight:600;white-space:nowrap}
-  .dept-table td:last-child{color:var(--text-dim)}
-  .dept-table tr:last-child td{border-bottom:none}
+/* ============ pull quote band ============ */
+.pull-band{background:var(--plate);color:var(--plate-hi);padding:clamp(56px,7vw,88px) 0}
+.pull-quote{font-size:clamp(28px,4.4vw,52px);font-style:italic;max-width:22ch;margin:0 auto;text-align:center;line-height:1.2}
+.pull-quote .mark{color:var(--accent);font-style:normal}
+.pull-attr{text-align:center;font-family:var(--mono);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#B7AA97;margin-top:22px}
 
-  /* CTX SECTION */
-  .ctx-box{background:rgba(255,166,87,0.05);border:1px solid rgba(255,166,87,0.18);border-radius:12px;padding:24px;margin-bottom:16px}
-  .ctx-sym{font-family:var(--mono);font-size:36px;font-weight:900;color:var(--orange);text-shadow:0 0 24px rgba(255,166,87,0.3);margin-bottom:10px;line-height:1}
-  .ctx-box h3{font-size:15px;font-weight:600;margin-bottom:6px}
-  .ctx-box p{font-size:13px;color:var(--text-dim);line-height:1.7}
+/* ============ v2 ledger ============ */
+.ledger{display:grid;grid-template-columns:1fr 1fr;gap:0 clamp(28px,4vw,64px);margin-top:14px}
+.ledger-item{padding:26px 0 28px;border-top:1px solid var(--rule-strong)}
+.ledger-item .idx{font-family:var(--mono);font-size:13px;color:var(--accent);font-weight:700;letter-spacing:.08em;display:block;margin-bottom:8px}
+.ledger-item h3{margin-bottom:8px}
+.ledger-item p{font-size:15px;color:var(--ink-soft)}
 
-  /* ROADMAP */
-  .roadmap-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
-  .roadmap-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;position:relative;overflow:hidden}
-  .roadmap-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
-  .road-active::before{background:var(--green)}
-  .road-planned::before{background:rgba(74,158,248,0.5)}
-  .road-future::before{background:rgba(99,179,255,0.2)}
-  .road-status{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
-  .status-active{color:var(--green)}
-  .status-planned{color:var(--blue)}
-  .status-future{color:var(--text-dim)}
-  .road-icon{font-size:22px;margin-bottom:8px}
-  .roadmap-card h3{font-size:14px;font-weight:600;margin-bottom:6px}
-  .roadmap-card p{font-size:12px;color:var(--text-dim);line-height:1.65}
+/* ============ modules ============ */
+.mod-credit{font-family:var(--serif);font-style:italic;font-size:18.5px;color:var(--ink-soft);max-width:62ch;margin-bottom:34px}
+.mod-list{border-top:1px solid var(--rule-strong)}
+.mod-row{display:grid;grid-template-columns:220px 1fr;gap:8px clamp(20px,3vw,48px);padding:20px 0;border-bottom:1px solid var(--rule);align-items:baseline}
+.mod-name{font-family:var(--mono);font-size:15px;font-weight:700;color:var(--accent-deep)}
+.mod-ind{display:block;font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);margin-top:4px;letter-spacing:.05em}
+.mod-row p{font-size:15.5px;color:var(--ink-soft)}
 
-  /* LICENSE */
-  .lic-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-  .lic-card{background:rgba(0,229,196,0.04);border:1px solid rgba(0,229,196,0.15);border-radius:10px;padding:20px}
-  .lic-card h3{font-size:13px;font-weight:600;margin-bottom:8px}
-  .lic-card p{font-size:12px;color:var(--text-dim);line-height:1.7}
+/* ============ case study ============ */
+.case{background:var(--paper-lo);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.case-cols{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(30px,4.5vw,64px);align-items:start;margin-top:12px}
+.case-stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:28px 0}
+.case-stat{background:var(--paper-hi);border:1px solid var(--rule);border-radius:var(--r-md);padding:16px 18px}
+.case-stat b{display:block;font-family:var(--serif);font-size:30px;font-weight:600;color:var(--ink);letter-spacing:-.02em}
+.case-stat span{font-size:13px;color:var(--ink-soft)}
+.case-aside{font-family:var(--serif);font-style:italic;font-size:19px;color:var(--ink-soft);border-left:3px solid var(--accent);padding-left:18px;margin:26px 0 0}
+.plate{background:var(--plate);border-radius:var(--r-lg);overflow:hidden;box-shadow:0 24px 50px -30px rgba(35,25,12,.55)}
+.plate figcaption{display:flex;align-items:center;gap:8px;padding:12px 18px;border-bottom:1px solid #3A312A;font-family:var(--mono);font-size:12px;color:#A2968A;letter-spacing:.05em}
+.plate .dots{display:flex;gap:6px}
+.plate .dots i{width:9px;height:9px;border-radius:50%;background:#4A403A;display:block}
+.plate pre{padding:20px 22px 24px;overflow-x:auto;font-family:var(--mono);font-size:12.75px;line-height:1.95;color:var(--plate-hi)}
+.plate .dim{color:#8E8274}
+.plate .ok{color:#A9C46C}
+.plate .hot{color:#F0764F;font-weight:700}
+.plate .cur{display:inline-block;width:8.5px;height:1.05em;background:var(--plate-hi);vertical-align:text-bottom;animation:blink 1.05s step-end infinite}
+.case-note{font-size:14.5px;color:var(--ink-soft);margin-top:16px;max-width:60ch}
 
-  /* FAQ */
-  .faq{display:flex;flex-direction:column;gap:9px}
-  .faq-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;cursor:pointer;transition:border-color .2s}
-  .faq-item:hover{border-color:rgba(74,158,248,0.3)}
-  .faq-q{font-size:14px;font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:12px}
-  .faq-arrow{color:var(--blue);transition:transform .2s;flex-shrink:0}
-  .faq-item.open .faq-arrow{transform:rotate(90deg)}
-  .faq-a{font-size:13px;color:var(--text-dim);line-height:1.7;margin-top:10px;display:none}
-  .faq-item.open .faq-a{display:block}
+/* ============ pipeline ============ */
+.pipeline{margin-top:44px}
+.pipe-row{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px}
+.pipe-step{flex:1 1 150px;background:var(--paper-hi);border:1px solid var(--rule-strong);border-radius:var(--r-md);padding:16px 18px;min-width:150px}
+.pipe-step .pipe-k{display:block;font-family:var(--mono);font-weight:700;font-size:14px;color:var(--ink)}
+.pipe-step .pipe-d{display:block;font-size:12.5px;color:var(--ink-soft);margin-top:5px;line-height:1.5}
+.pipe-arrow{align-self:center;font-family:var(--mono);font-size:20px;color:var(--accent);flex:none}
+.pipe-fanlabel{display:flex;align-items:center;gap:14px;margin:22px 0 14px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
+.pipe-fanlabel::before,.pipe-fanlabel::after{content:'';height:1px;background:var(--rule-strong);flex:1}
+.pipe-fan{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pipe-leaf{border:1px dashed var(--rule-strong);border-radius:var(--r-md);padding:14px 18px;background:transparent}
+.pipe-leaf b{font-family:var(--mono);font-size:13.5px;color:var(--accent-deep)}
+.pipe-leaf span{display:block;font-size:12.5px;color:var(--ink-soft);margin-top:4px;line-height:1.55}
 
-  /* TEAM */
-  .team-chips{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
-  .chip{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:30px;padding:7px 16px 7px 9px;font-size:13px}
-  .avatar{width:28px;height:28px;border-radius:50%;background:var(--blue-dim);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--blue)}
+/* ============ quickstart ============ */
+.qs-cols{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:clamp(28px,4vw,56px);align-items:start;margin-top:8px}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.swap-table{width:100%;border-collapse:collapse;font-size:14px}
+.swap-table caption{text-align:left;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);padding-bottom:12px}
+.swap-table th{text-align:left;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);font-weight:600;padding:8px 14px 8px 0;border-bottom:1px solid var(--rule-strong)}
+.swap-table td{padding:12px 14px 12px 0;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink-soft)}
+.swap-table td code{white-space:nowrap}
+.preview-card{margin-top:22px;background:var(--accent-wash);border:1px solid #E4C4AE;border-radius:var(--r-md);padding:18px 22px;font-size:14.5px;color:#6B3A22}
+.preview-card b{color:var(--accent-deep)}
+.cli-line{margin-top:20px;font-family:var(--mono);font-size:13px;color:var(--ink-soft)}
+.cli-line b{color:var(--ink);font-weight:700}
 
-  /* GH BANNER */
-  .gh-banner{background:rgba(74,158,248,0.06);border:1px solid rgba(74,158,248,0.18);border-radius:14px;padding:30px 34px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:76px}
-  .gh-banner h3{font-size:18px;font-weight:700;margin-bottom:4px}
-  .gh-banner p{font-size:14px;color:var(--text-dim)}
-  .gh-btn{display:inline-flex;align-items:center;gap:8px;background:#fff;color:#0d1117;padding:10px 22px;border-radius:8px;font-size:14px;font-weight:700;text-decoration:none;flex-shrink:0;transition:background .15s}
-  .gh-btn:hover{background:#e6edf3}
-  .gh-icon{width:17px;height:17px}
+/* ============ roadmap ============ */
+.road-list{border-top:1px solid var(--rule-strong);margin-top:10px}
+.road-row{display:grid;grid-template-columns:64px 260px 1fr;gap:8px clamp(16px,3vw,40px);padding:20px 0;border-bottom:1px solid var(--rule);align-items:baseline}
+.road-idx{font-family:var(--mono);font-size:13px;color:var(--accent);font-weight:700}
+.road-row h3{font-size:17px}
+.road-row p{font-size:15px;color:var(--ink-soft)}
 
-  footer{border-top:1px solid var(--border);padding:26px 0;text-align:center;font-family:var(--mono);font-size:12px;color:var(--text-dim);position:relative;z-index:2}
-  footer span{color:var(--blue)}
-  footer a{color:var(--text-dim);text-decoration:none}
-  footer a:hover{color:var(--blue)}
+/* ============ license ============ */
+.lic-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
+.lic-card{background:var(--paper-hi);border:1px solid var(--rule);border-radius:var(--r-lg);padding:26px 26px 28px}
+.lic-card h3{margin-bottom:10px}
+.lic-card .lic-k{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-deep);display:block;margin-bottom:12px}
+.lic-card p{font-size:14.5px;color:var(--ink-soft)}
 
-  @media(max-width:700px){
-    .g2,.g3,.demo-split,.impact-grid,.lic-grid{grid-template-columns:1fr}
-    .hide-sm{display:none}
-    .gh-banner{flex-direction:column;text-align:center}
-  }
+/* ============ team + faq ============ */
+.team-row{display:flex;flex-wrap:wrap;gap:14px;margin:26px 0 0}
+.team-card{flex:1 1 240px;border:1px solid var(--rule);background:var(--paper-hi);border-radius:var(--r-md);padding:20px 22px}
+.team-card b{font-family:var(--serif);font-size:20px;font-weight:600;letter-spacing:-.01em;display:block}
+.team-card span{font-family:var(--mono);font-size:12px;color:var(--ink-soft);letter-spacing:.06em}
+.faq{margin-top:34px;border-top:1px solid var(--rule-strong)}
+.faq details{border-bottom:1px solid var(--rule)}
+.faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:18px;padding:20px 2px;font-weight:640;font-size:16.5px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:'+';font-family:var(--serif);font-size:26px;color:var(--accent);flex:none;line-height:1;transition:transform .25s ease}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq .faq-a{padding:0 2px 22px;font-size:15.5px;color:var(--ink-soft);max-width:70ch}
+.faq .faq-a code{white-space:normal;overflow-wrap:anywhere} /* long paths wrap on very narrow screens */
+
+/* ============ footer ============ */
+footer{border-top:1px solid var(--rule-strong);padding:36px 0 44px;background:var(--paper-lo)}
+.foot-inner{display:flex;flex-wrap:wrap;gap:14px 34px;align-items:baseline;justify-content:space-between}
+.foot-brand{font-family:var(--serif);font-weight:640;font-size:20px}
+.foot-brand em{color:var(--accent);font-style:italic}
+footer p,footer a{font-size:13.5px;color:var(--ink-soft)}
+.foot-meta{font-family:var(--mono);font-size:12px;color:var(--ink-faint)}
+
+/* ============ responsive ============ */
+@media(max-width:960px){
+  .hero-cols,.case-cols,.qs-cols{grid-template-columns:1fr}
+  .ledger{grid-template-columns:1fr}
+  .mod-row{grid-template-columns:1fr;gap:6px}
+  .road-row{grid-template-columns:64px 1fr}
+  .road-row p{grid-column:2}
+  .lic-grid{grid-template-columns:1fr}
+  .op-grid{grid-template-columns:1fr}
+  .pipe-fan{grid-template-columns:1fr}
+}
+@media(max-width:880px){
+  .spread{grid-template-columns:1fr}
+  .track-rigid{border-left:none;border-top:1px dashed var(--rule-strong)}
+  .seam{position:static;transform:none;margin:-34px auto;order:2}
+  .spread{display:flex;flex-direction:column}
+  .track-fluid{order:1}
+  .track-rigid{order:3}
+}
+@media(max-width:620px){
+  html{scroll-padding-top:118px}
+  body{font-size:16px}
+  .head-inner{padding-top:8px;padding-bottom:8px}
+  .site-head nav a{font-size:12.5px;padding:0 9px;display:inline-flex;align-items:center;min-height:44px}
+  .opt{display:none}
+  .pipe-row{flex-direction:column}
+  .pipe-arrow{transform:rotate(90deg);align-self:flex-start;margin-left:22px}
+  .case-stats{grid-template-columns:1fr 1fr}
+  .stat-strip{gap:6px 18px}
+  .copy-btn{min-height:44px;padding:10px 16px;margin:-8px 0}
+  footer a{display:inline-block;padding:11px 4px;margin:-7px 0}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+  .caret{animation:none!important}
+  .rv-init{opacity:1!important;transform:none!important}
+}
 </style>
 </head>
-<body>
+<body id="top">
+<a class="skip" href="#main">Skip to content</a>
 
-<nav>
-  <div class="nav-inner">
-    <a class="nav-logo" href="#">Eu<span>lyph</span></a>
-    <ul class="nav-links">
-      <li class="hide-sm"><a href="#about">About</a></li>
-      <li class="hide-sm"><a href="#operators">Operators</a></li>
-      <li class="hide-sm"><a href="#engine">Engine</a></li>
-      <li class="hide-sm"><a href="#it-case">IT Case Study</a></li>
-      <li class="hide-sm"><a href="#roadmap">Roadmap</a></li>
-      <li class="hide-sm"><a href="#faq">FAQ</a></li>
-      <li><a href="https://github.com/YOUR-USERNAME/YOUR-EULYPH-REPO" target="_blank" class="nav-cta">GitHub ↗</a></li>
-    </ul>
+<header class="site-head">
+  <div class="wrap head-inner">
+    <a class="brand" href="#top">Eu<em>lyph</em></a>
+    <nav aria-label="Site">
+      <ul>
+        <li class="opt"><a href="#tracks">The idea</a></li>
+        <li><a href="#v2">Version 2</a></li>
+        <li class="opt"><a href="#modules">Modules</a></li>
+        <li><a href="#case-study">Case study</a></li>
+        <li><a href="#quickstart">Quickstart</a></li>
+        <li class="opt"><a href="#faq">FAQ</a></li>
+        <li><a class="gh" href="https://github.com/IsaiahHuus/eulyph-site" rel="noopener">GitHub</a></li>
+      </ul>
+    </nav>
   </div>
-</nav>
+</header>
 
-<div class="wrap">
+<main id="main">
 
-  <!-- HERO -->
-  <div class="hero">
-    <div class="hero-badge">&#x25B6; AI-Native · Non-Commercial Open Source · Eulyph LLC</div>
-    <h1>Eulyph</h1>
-    <div class="hero-tagline">Bridging Human Intent and Machine Execution</div>
-    <div class="hero-desc">A brand-new programming language where AI isn't an add-on — it's baked into the syntax. Write what you mean, not how a computer needs to hear it. Eulyph handles the thinking so your team handles the results.</div>
-    <div class="hero-btns">
-      <a href="https://github.com/YOUR-USERNAME/YOUR-EULYPH-REPO" target="_blank" class="btn btn-primary">Get Eulyph on GitHub</a>
-      <a href="#about" class="btn btn-ghost">Learn more &#x2192;</a>
-    </div>
-    <div class="badge-row">
-      <span class="pill pill-blue">&#x1F512; Non-Commercial Free License</span>
-      <span class="pill pill-teal">&#x2728; Commercial License Available</span>
-      <span class="pill pill-orange">&#x1F40D; Python-powered Runtime</span>
-    </div>
-
-    <div class="terminal" style="max-width:660px;margin:0 auto;">
-      <div class="t-bar">
-        <span class="dot dr"></span><span class="dot dy"></span><span class="dot dg"></span>
-        <span class="t-title">example.eulyph</span>
+<!-- ================= HERO ================= -->
+<section class="hero" aria-labelledby="hero-title">
+  <div class="wrap">
+    <p class="eyebrow rv">Eulyph LLC &middot; an AI&#8209;native language on a Python runtime</p>
+    <h1 id="hero-title" class="rv">Write the rules you&nbsp;know. <span class="uline">Ask</span> about the&nbsp;rest.</h1>
+    <div class="hero-cols">
+      <div class="rv">
+        <p class="lede dropcap">Eulyph is a small scripting language where the model is part of the syntax, not a library you call. <strong><code>@</code> sends a prompt to a model.</strong> <strong><code>?</code> branches on a yes/no question the model answers</strong> &mdash; and it is the only control flow there is. Judgement runs on the fluid track; exact work &mdash; functions, files, JSON, HTTP, any Python module &mdash; runs on the rigid one. Math and money never touch the model.</p>
+        <div class="btn-row">
+          <a class="btn btn-solid" href="#quickstart">Run it in 60 seconds</a>
+          <a class="btn btn-line" href="#tracks">Read the idea</a>
+        </div>
+        <p class="hero-note">The core repository is in <strong>private preview</strong> while the team finishes review &mdash; it opens to the public soon. Access on request.</p>
+        <p class="stat-strip"><span><b>489</b> passing tests</span> <span><b>43</b> builtins</span> <span><b>6</b> ecosystem modules</span> <span><b>0</b> API keys to try it</span></p>
       </div>
-      <div class="t-body">
-        <div><span class="cm"># Load a local AI model</span></div>
-        <div><span class="pl">ai</span> = <span class="fn">model</span>(<span class="str">"http://localhost:1234/v1"</span>)</div>
-        <div><span class="pl">ctx</span> = <span class="pl">ai</span>.<span class="fn">context</span>()</div>
-        <div>&nbsp;</div>
-        <div><span class="cm"># @ asks the AI — no API boilerplate needed</span></div>
-        <div><span class="pl">review</span> = <span class="pl">ctx</span> <span class="sym-at">@</span> <span class="str">"Summarize this report"</span></div>
-        <div>&nbsp;</div>
-        <div><span class="cm"># ? -> routes by meaning, not exact keywords</span></div>
-        <div>(<span class="pl">review</span> <span class="sym-q">?</span> <span class="str">"Action required?"</span> <span class="sym-ar">-></span> <span class="pl">urgent_queue</span></div>
-        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">else:</span> <span class="pl">archive</span>)</div>
-        <div>&nbsp;</div>
-        <div><span class="cm"># Serve any result as a live web API</span></div>
-        <div><span class="pl">ctx</span>.<span class="fn">serve</span>()</div>
-        <div><span class="out">&gt; API live at http://127.0.0.1:5000 &nbsp;</span><span class="cursor"></span></div>
-      </div>
+      <figure class="code-card rv">
+        <figcaption class="code-head"><b>routing.eulyph</b><span>Eulyph v2</span></figcaption>
+        <pre><span class="ln"><span class="cm"># ticket routing, the short version</span></span><span class="ln">teams = <span class="fn">list</span>(<span class="st">"Apps team"</span>, <span class="st">"Infrastructure team"</span>, <span class="st">"IT helpdesk team"</span>)</span><span class="ln">ticket = <span class="st">"The eduroam Wi-Fi keeps dropping in Lommen Hall"</span></span><span class="ln"></span><span class="ln ai">result = <span class="fn">classify</span>(ticket, teams)   <span class="cm"># label + confidence + reason</span></span><span class="ln"></span><span class="ln ai">route = (result<span class="op">?</span></span><span class="ln ai">    <span class="st">"Is the confidence score greater than 80?"</span> <span class="op">-&gt;</span> result.label</span><span class="ln ai">    <span class="kw">else:</span> <span class="st">"IT helpdesk team"</span>)   <span class="cm"># unsure? a person decides</span></span><span class="ln"></span><span class="ln"><span class="fn">print</span>(ticket + <span class="st">" -&gt; "</span> + route)<span class="caret" aria-hidden="true"></span></span></pre>
+      </figure>
     </div>
   </div>
+</section>
 
-  <hr class="divider">
+<!-- ================= TRACKS SPREAD ================= -->
+<section id="tracks" aria-labelledby="tracks-title">
+  <div class="wrap">
+    <div class="tracks-head rv">
+      <p class="eyebrow" style="justify-content:center">The idea</p>
+      <h2 id="tracks-title">Two tracks. One language.</h2>
+      <p class="lede" style="margin:0 auto">Every program has parts you can state exactly and parts you can only describe. Most stacks bolt an AI SDK onto the exact parts. Eulyph gives each kind of work its own track &mdash; and a grammar for the seam between them.</p>
+    </div>
 
-  <!-- ABOUT -->
-  <section id="about">
-    <div class="eyebrow">// what is eulyph</div>
-    <div class="sec-title">A language built for the AI era</div>
-    <div class="sec-desc">Traditional programming languages require exact instructions — one wrong keyword and the whole program breaks. Eulyph is different. It understands <em>meaning</em>, not just characters, making automation that was previously impossible suddenly straightforward.</div>
-    <div class="g2" style="margin-bottom:14px;">
-      <div style="background:rgba(74,158,248,0.05);border:1px solid rgba(74,158,248,0.22);border-radius:12px;padding:26px;">
-        <div style="font-family:var(--mono);font-size:11px;color:var(--blue);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;">Fluid track — AI-driven</div>
-        <h3 style="font-size:15px;font-weight:600;margin-bottom:8px;">Natural language operations</h3>
-        <p style="font-size:13px;color:var(--text-dim);line-height:1.7;margin-bottom:12px;">Ambiguous decisions, data extraction, classification, and reasoning — handled natively by the <code>@</code> and <code>? -></code> operators via a local LLM. No API wrappers, no boilerplate.</p>
-        <div style="display:flex;flex-wrap:wrap;gap:6px;">
-          <span class="pill pill-blue" style="font-size:10px;">@ inference</span>
-          <span class="pill pill-blue" style="font-size:10px;">? -> branching</span>
-          <span class="pill pill-blue" style="font-size:10px;">ctx memory</span>
-          <span class="pill pill-blue" style="font-size:10px;">LLM-powered</span>
+    <div class="spread rv">
+      <div class="track track-fluid">
+        <span class="track-glyph" aria-hidden="true">@</span>
+        <svg class="blob" viewBox="0 0 300 300" aria-hidden="true"><path fill="rgba(198,61,29,.10)" d="M155 20c55 6 112 38 122 90 10 51-27 105-72 135s-98 37-138 12S6 175 16 122 62 33 105 22c17-4 33-4 50-2z"/></svg>
+        <p class="track-label">The fluid track</p>
+        <h3>Where judgement lives</h3>
+        <p>Reading a messy ticket. Naming what an email is about. Deciding whether something is urgent. The model answers in place, and the language moves on.</p>
+        <div class="mini"><span class="cm"># swap "mock" for a real model</span>
+ctx = <span class="fn">model</span>(<span class="st">"mock"</span>).<span class="fn">context</span>()
+reply = ctx <span class="op">@</span> <span class="st">"Summarize: the printer on floor 2 is jammed"</span></div>
+      </div>
+      <div class="seam" aria-hidden="true">?</div>
+      <div class="track track-rigid">
+        <span class="track-glyph" aria-hidden="true">{&nbsp;}</span>
+        <p class="track-label">The rigid track</p>
+        <h3>Where the answer never changes</h3>
+        <p>Functions, files, JSON, HTTP &mdash; and any Python module through <code>extern</code> and <code>env()</code>. Totals are added by Python, never by a model&rsquo;s best guess.</p>
+        <div class="mini"><span class="cm"># math and money always happen here</span>
+py = <span class="fn">env</span>()
+py.<span class="fn">set</span>(<span class="st">"prices"</span>, <span class="fn">list</span>(<span class="st">"19.99"</span>, <span class="st">"5.01"</span>))
+<span class="fn">print</span>(<span class="st">"Total: "</span> + py.<span class="fn">eval</span>(<span class="st">"sum(float(p) for p in prices)"</span>))</div>
+      </div>
+    </div>
+    <p class="seam-note rv">The <span class="op">?</span> operator sits on the seam: a question the model answers &mdash; the only branch in the language &mdash; decides which way the exact code runs.</p>
+
+    <div class="op-grid">
+      <article class="op-card rv">
+        <span class="op-big" aria-hidden="true">@</span>
+        <p class="op-kicker">The inference operator</p>
+        <h3>Ask the model, get an answer, keep going</h3>
+        <p>A conversation on the left, a prompt on the right. No client object, no request builder, no response parsing &mdash; inference is an expression like any other.</p>
+        <div class="mini">ctx = <span class="fn">model</span>(<span class="st">"mock"</span>).<span class="fn">context</span>()
+reply = ctx <span class="op">@</span> <span class="st">"Summarize: the printer on floor 2 is jammed"</span>
+<span class="fn">print</span>(reply)</div>
+      </article>
+      <article class="op-card rv">
+        <span class="op-big" aria-hidden="true">?</span>
+        <p class="op-kicker">The question operator &mdash; the only control flow</p>
+        <h3>A branch is a yes/no question a model answers</h3>
+        <p>There is no <code>if</code> and no <code>for</code>. A parenthesized question routes the program one way or the other; <code>each()</code> is the loop. Every decision is auditable with <code>--trace</code>.</p>
+        <div class="mini">verdict = (<span class="st">"Server room is on fire"</span><span class="op">?</span>
+    <span class="st">"Is this urgent?"</span> <span class="op">-&gt;</span> <span class="st">"page on-call"</span> <span class="kw">else:</span> <span class="st">"queue"</span>)</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PULL QUOTE ================= -->
+<aside class="pull-band" aria-label="Design principle">
+  <div class="wrap">
+    <blockquote class="pull-quote rv"><span class="mark">&ldquo;</span>Math and money never happen in the model.<span class="mark">&rdquo;</span></blockquote>
+    <p class="pull-attr rv">The Eulyph design principle</p>
+  </div>
+</aside>
+
+<!-- ================= V2 ================= -->
+<section id="v2" aria-labelledby="v2-title">
+  <div class="wrap">
+    <p class="eyebrow rv">Version 2 &middot; 2026</p>
+    <h2 id="v2-title" class="rv">From a language to a deployable logic layer</h2>
+    <p class="lede rv" style="margin-bottom:26px">Version 1 proved the syntax. Version 2 made it something a company can run: an AI logic layer you tailor to your own teams, sources and rules &mdash; pull data in, let a model decide, push results out.</p>
+    <div class="ledger">
+      <div class="ledger-item rv">
+        <span class="idx">01</span>
+        <h3>Pluggable model backends</h3>
+        <p>The same script runs on a local model through LM&nbsp;Studio or Ollama (data never leaves the machine), on Claude through the Anthropic API, or on a deterministic offline <code>mock</code> for demos and tests. Only the <code>--model</code> flag changes.</p>
+      </div>
+      <div class="ledger-item rv">
+        <span class="idx">02</span>
+        <h3>One-line builtins</h3>
+        <p><code>classify()</code> sorts text into labels with a confidence score, <code>extract()</code> pulls structured fields from messy text, <code>ask()</code> answers a question, <code>where()</code> filters a list by one, <code>each()</code> is the loop. 43 builtins in all.</p>
+      </div>
+      <div class="ledger-item rv">
+        <span class="idx">03</span>
+        <h3>Data without leaving the language</h3>
+        <p>The string is still the only literal &mdash; <code>record()</code> and <code>list()</code> build structured data anyway, and JSON is a native value with real methods.</p>
+      </div>
+      <div class="ledger-item rv">
+        <span class="idx">04</span>
+        <h3>A module system</h3>
+        <p><code>load()</code> runs another <code>.eulyph</code> file once and returns its exports, with a search path, circular-load detection and per-module error lines. It is how the <code>std.*</code> ecosystem ships.</p>
+      </div>
+      <div class="ledger-item rv">
+        <span class="idx">05</span>
+        <h3>Templates a company tailors</h3>
+        <p>Ready-made scripts &mdash; ticket router, email triage, data extractor, survey themes &mdash; that a company adapts without touching the script itself: the ticket router by editing <strong>one JSON file</strong> with its departments, thresholds and destinations, the others with simple <code>--var</code> flags.</p>
+      </div>
+      <div class="ledger-item rv">
+        <span class="idx">06</span>
+        <h3>Integrations</h3>
+        <p>TeamDynamix tickets (search, read, assign), email inboxes over IMAP, JSON and CSV files, and any web API through <code>http_get</code> / <code>http_post</code>.</p>
+      </div>
+      <div class="ledger-item rv">
+        <span class="idx">07</span>
+        <h3>A real command line</h3>
+        <p><code>eulyph run</code>, <code>check</code>, <code>repl</code> and <code>version</code>, with meaningful exit codes, <code>--stats</code> for call and token counts, and <code>--trace</code> to log every model call and every <code>?</code> decision.</p>
+      </div>
+      <div class="ledger-item rv">
+        <span class="idx">08</span>
+        <h3>Safety rails</h3>
+        <p>Model answers are validated against the allowed labels. Low confidence goes to a human queue. Model output is never interpolated into Python source. Model-written code is held on disk for human review before it can ever run.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MODULES ================= -->
+<section id="modules" aria-labelledby="modules-title">
+  <div class="wrap">
+    <p class="eyebrow rv">The ecosystem</p>
+    <h2 id="modules-title" class="rv">Six modules, one honest line each</h2>
+    <p class="mod-credit rv">Designed by <strong>Abid Imtiaz</strong> in the Eulyph-ecosystem project &mdash; his module designs, names and sample data, rewritten as working Eulyph&nbsp;v2. Load any of them with <code>load("std.&lt;name&gt;")</code>.</p>
+    <div class="mod-list">
+      <div class="mod-row rv">
+        <div><span class="mod-name">std.helpdesk</span><span class="mod-ind">IT service desks</span></div>
+        <p>Routes a support ticket to a team, and auto-routes only at or above a confidence threshold. The nine MSUM IT teams are built in.</p>
+      </div>
+      <div class="mod-row rv">
+        <div><span class="mod-name">std.finance</span><span class="mod-ind">Finance &amp; accounting</span></div>
+        <p>The model lists every expense in messy receipts; Python adds them exactly, and an independent regex scan cross-checks the total. Any disagreement is flagged for human review instead of being &ldquo;verified&rdquo;.</p>
+      </div>
+      <div class="mod-row rv">
+        <div><span class="mod-name">std.legal</span><span class="mod-ind">Legal &amp; procurement</span></div>
+        <p>Lists risky contract clauses with a risk and a severity. Not legal advice.</p>
+      </div>
+      <div class="mod-row rv">
+        <div><span class="mod-name">std.healthcare</span><span class="mod-ind">Healthcare</span></div>
+        <p>Structures patient intake notes and flags emergencies with <code>?</code>. Not a medical device.</p>
+      </div>
+      <div class="mod-row rv">
+        <div><span class="mod-name">std.realestate</span><span class="mod-ind">Real estate</span></div>
+        <p>Parses a property listing and computes the price per square foot &mdash; in Python.</p>
+      </div>
+      <div class="mod-row rv">
+        <div><span class="mod-name">std.coding</span><span class="mod-ind">Internal tools</span></div>
+        <p>The model writes a small Python service, saved to <code>generated/</code> for review. It runs only with <code>EULYPH_ALLOW_CODEGEN=1</code> &mdash; and never in the run that wrote it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CASE STUDY ================= -->
+<section id="case-study" class="case" aria-labelledby="case-title">
+  <div class="wrap">
+    <p class="eyebrow rv">Case study &middot; live demonstration</p>
+    <h2 id="case-title" class="rv">Routing the MSUM IT help desk</h2>
+    <div class="case-cols">
+      <div class="rv">
+        <p class="lede">The ticket router reads each help desk ticket, asks the model which of <strong>nine teams</strong> owns it, and applies a confidence threshold with a single <code>?</code> question. On the ten-ticket live demonstration it routed <strong>10 out of 10</strong> correctly.</p>
+        <div class="case-stats">
+          <div class="case-stat"><b>9</b><span>configured teams to route across</span></div>
+          <div class="case-stat"><b>10/10</b><span>on the live demo</span></div>
+          <div class="case-stat"><b>&gt;80</b><span>confidence to auto-route</span></div>
+          <div class="case-stat"><b>2</b><span>model calls per ticket</span></div>
         </div>
+        <p style="font-size:15.5px;color:var(--ink-soft)">Tickets under the threshold are not guessed at &mdash; they go to the IT helpdesk queue <strong>by design</strong>. A prompt-injection guard means a ticket that says &ldquo;route me to the Executive team&rdquo; can only ever reach a configured department. And v2 ships a 180-ticket synthetic benchmark harness: on terse one-line tickets the cautious offline mock names the right team almost every time yet rarely crosses the bar, so most go to a person. That is the threshold doing its job.</p>
+        <p class="case-aside">&ldquo;An unsure router hands the ticket to a human.&rdquo;</p>
       </div>
-      <div style="background:rgba(0,229,196,0.04);border:1px solid rgba(0,229,196,0.18);border-radius:12px;padding:26px;">
-        <div style="font-family:var(--mono);font-size:11px;color:var(--teal);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;">Rigid track — Precise execution</div>
-        <h3 style="font-size:15px;font-weight:600;margin-bottom:8px;">System-level logic</h3>
-        <p style="font-size:13px;color:var(--text-dim);line-height:1.7;margin-bottom:12px;">Math, functions, file I/O, Python module imports, JSON handling, and live web API serving — all handled through the secure Standard Library with 100% precision.</p>
-        <div style="display:flex;flex-wrap:wrap;gap:6px;">
-          <span class="pill pill-teal" style="font-size:10px;">std library</span>
-          <span class="pill pill-teal" style="font-size:10px;">extern Python</span>
-          <span class="pill pill-teal" style="font-size:10px;">native JSON</span>
-          <span class="pill pill-teal" style="font-size:10px;">.serve() API</span>
+      <div class="rv">
+        <figure class="plate">
+          <figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span> eulyph run &middot; mock backend &middot; offline</figcaption>
+          <pre id="case-term"><span class="dim">$</span> eulyph run templates/ticket_router/router.eulyph --model mock
+
+MSUM IT: routing 10 ticket(s) from the file source
+101 -&gt; Apps team (100) expected Apps team <span class="ok">OK</span>
+102 -&gt; Break-Fix team (100) expected Break-Fix team <span class="ok">OK</span>
+<span class="dim">...</span>
+110 -&gt; Infrastructure team (100) expected Infrastructure team <span class="ok">OK</span>
+<span class="dim">...</span>
+Model's first choice correct (before the threshold): <span class="hot">10/10 (100.0%)</span>
+Sent to IT helpdesk team by the threshold or the guard: 0
+Accuracy: <span class="hot">10/10 (100.0%)</span>
+Assignments sent to the file source
+Report written to ai_routing_results.json</pre>
+        </figure>
+        <p class="case-note">A different company adopts the router by copying one JSON file &mdash; departments, keywords, threshold, TeamDynamix group ids &mdash; and running the same script. Framed honestly: this is a case study and live demonstration, not a production deployment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HOW IT WORKS ================= -->
+<section id="how" aria-labelledby="how-title">
+  <div class="wrap">
+    <p class="eyebrow rv">Under the hood</p>
+    <h2 id="how-title" class="rv">A real interpreter, built by hand</h2>
+    <p class="lede rv">No language framework, no transpiler tricks. Source is tokenized with line and column, parsed by recursive descent into an AST, and walked by an evaluator with real scopes and closures &mdash; which fans out to the model backends, the standard library and the integrations.</p>
+    <div class="pipeline rv">
+      <div class="pipe-row">
+        <div class="pipe-step"><span class="pipe-k">script.eulyph</span><span class="pipe-d">your intent, as text</span></div>
+        <span class="pipe-arrow" aria-hidden="true">&#8594;</span>
+        <div class="pipe-step"><span class="pipe-k">lexer</span><span class="pipe-d">tokens, with line &amp; column</span></div>
+        <span class="pipe-arrow" aria-hidden="true">&#8594;</span>
+        <div class="pipe-step"><span class="pipe-k">parser</span><span class="pipe-d">recursive descent &#8594; AST</span></div>
+        <span class="pipe-arrow" aria-hidden="true">&#8594;</span>
+        <div class="pipe-step"><span class="pipe-k">evaluator</span><span class="pipe-d">scopes, closures, every <b>?</b> decision</span></div>
+      </div>
+      <p class="pipe-fanlabel">which fans out to</p>
+      <div class="pipe-fan">
+        <div class="pipe-leaf"><b>backends</b><span>mock &middot; LM Studio / Ollama / vLLM &middot; Claude (Anthropic API)</span></div>
+        <div class="pipe-leaf"><b>stdlib</b><span>43 builtins: classify, extract, files, JSON, CSV, HTTP, env()</span></div>
+        <div class="pipe-leaf"><b>integrations</b><span>TeamDynamix &middot; IMAP email &middot; files &middot; web APIs</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= QUICKSTART ================= -->
+<section id="quickstart" class="case" aria-labelledby="qs-title">
+  <div class="wrap">
+    <p class="eyebrow rv">Quickstart</p>
+    <h2 id="qs-title" class="rv">Sixty seconds, zero API keys</h2>
+    <div class="qs-cols">
+      <div class="rv">
+        <figure class="code-card">
+          <figcaption class="code-head" id="qs-head"><b>terminal</b><span>Python 3.10+</span></figcaption>
+          <pre id="qs-pre"><span class="ln"><span class="cm"># from the repository folder</span></span><span class="ln">python -m venv .venv</span><span class="ln">.venv\Scripts\activate            <span class="cm"># Windows</span></span><span class="ln">source .venv/bin/activate         <span class="cm"># macOS / Linux</span></span><span class="ln">pip install -e .</span><span class="ln"></span><span class="ln"><span class="cm"># route ten demo tickets, fully offline</span></span><span class="ln ai">eulyph run templates/ticket_router/router.eulyph --model mock</span></pre>
+        </figure>
+        <p class="cli-line">The CLI: <b>eulyph run</b> &middot; <b>check</b> &middot; <b>repl</b> &middot; <b>version</b></p>
+        <p style="font-size:14.5px;color:var(--ink-soft);margin-top:12px"><code>--model mock</code> is a deterministic offline backend &mdash; no network, no key, no GPU. Every demo and all 489 tests run without one.</p>
+      </div>
+      <div class="rv">
+        <div class="table-scroll">
+        <table class="swap-table">
+          <caption>Same script, different model</caption>
+          <thead><tr><th scope="col">Where it runs</th><th scope="col">--model</th></tr></thead>
+          <tbody>
+            <tr><td>Your machine &mdash; LM Studio, Ollama or any OpenAI-compatible server. Ticket text never leaves it.</td><td><code>http://localhost:1234/v1</code></td></tr>
+            <tr><td>Claude, through the Anthropic API.</td><td><code>anthropic</code></td></tr>
+            <tr><td>Nowhere &mdash; the deterministic mock, for demos and tests.</td><td><code>mock</code></td></tr>
+          </tbody>
+        </table>
         </div>
+        <div class="preview-card"><b>Private preview.</b> The core repository opens to the public soon; until then, access is available on request. This site&rsquo;s own repository is public at <a href="https://github.com/IsaiahHuus/eulyph-site" rel="noopener">github.com/IsaiahHuus/eulyph-site</a>.</div>
       </div>
     </div>
-    <div class="g4">
-      <div class="card"><div class="card-icon">&#x1F9E0;</div><h3>AI at the core</h3><p>The operators are first-class syntax — not library calls. The language itself understands intent.</p></div>
-      <div class="card"><div class="card-icon">&#x26A1;</div><h3>Radically less code</h3><p>Replace hundreds of rigid if/else rules with a handful of intent-driven lines. Complexity condenses into clarity.</p></div>
-      <div class="card"><div class="card-icon">&#x1F6E1;&#xFE0F;</div><h3>Secure by design</h3><p>Raw execution is hidden behind safe wrappers. Every AI call is sandboxed. Your data stays local.</p></div>
-      <div class="card"><div class="card-icon">&#x1F310;</div><h3>Instant web APIs</h3><p>Any object or context becomes a live Flask endpoint with <code>.serve()</code> — zero configuration.</p></div>
-    </div>
-  </section>
+  </div>
+</section>
 
-  <hr class="divider">
-
-  <!-- OPERATORS -->
-  <section id="operators">
-    <div class="eyebrow">// core operators</div>
-    <div class="sec-title">Two symbols that change everything</div>
-    <div class="sec-desc">Instead of verbose logic, Eulyph gives you two first-class operators that speak directly to the AI engine — replacing thousands of lines of brittle code with a single line of intent.</div>
-    <div class="g2" style="margin-bottom:14px;">
-      <div class="op-card">
-        <div class="op-sym op-at">@</div>
-        <h3>The Inference Operator</h3>
-        <div class="op-sub">Ask the AI anything — get a direct answer</div>
-        <p>Hands any data to the AI and returns a result. No API wrappers, no JSON parsing, no HTTP boilerplate. Just describe what you want in plain language and Eulyph handles the rest.</p>
-        <div class="mini">
-          <div><span class="cm"># Extract price from a messy email</span></div>
-          <div><span class="pl">price</span> = <span class="pl">raw_email</span> <span class="sym-at">@</span> <span class="str">"total cost in dollars"</span></div>
-          <div><span class="out">&gt; $2,500.00</span></div>
-          <div>&nbsp;</div>
-          <div><span class="cm"># Summarize a document</span></div>
-          <div><span class="pl">summary</span> = <span class="pl">report</span> <span class="sym-at">@</span> <span class="str">"key findings"</span></div>
-        </div>
+<!-- ================= ROADMAP ================= -->
+<section id="roadmap" aria-labelledby="road-title">
+  <div class="wrap">
+    <p class="eyebrow rv">Roadmap</p>
+    <h2 id="road-title" class="rv">What&rsquo;s next</h2>
+    <div class="road-list">
+      <div class="road-row rv">
+        <span class="road-idx">R1</span>
+        <h3>Microsoft 365 / Graph email source</h3>
+        <p>Outlook and Exchange Online inboxes alongside the existing IMAP path.</p>
       </div>
-      <div class="op-card">
-        <div class="op-sym op-q">? -></div>
-        <h3>The Branching Operator</h3>
-        <div class="op-sub">Route by meaning, not exact keywords</div>
-        <p>Replaces entire chains of if/else logic with a single AI-powered decision. Judges by intent — "smashed screen" routes correctly just like "broken screen" — without any hard-coded rules.</p>
-        <div class="mini">
-          <div><span class="cm"># Classify and route in one line</span></div>
-          <div>(<span class="pl">ticket</span> <span class="sym-q">?</span> <span class="str">"Is this urgent?"</span> <span class="sym-ar">-></span> <span class="pl">priority_queue</span></div>
-          <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">else:</span> <span class="pl">standard_queue</span>)</div>
-          <div><span class="out">&gt; priority_queue</span></div>
-        </div>
+      <div class="road-row rv">
+        <span class="road-idx">R2</span>
+        <h3>More ticketing systems</h3>
+        <p>Jira Service Management, ServiceNow and Freshservice sources next to TeamDynamix.</p>
+      </div>
+      <div class="road-row rv">
+        <span class="road-idx">R3</span>
+        <h3>Routing dashboard</h3>
+        <p>Routing reports, accuracy over time, and reviewing routes by hand.</p>
+      </div>
+      <div class="road-row rv">
+        <span class="road-idx">R4</span>
+        <h3>Hosted runner</h3>
+        <p>Scheduled Eulyph scripts without a company server.</p>
       </div>
     </div>
-    <!-- Other syntax -->
-    <div style="font-size:13px;color:var(--text-dim);margin-bottom:14px;font-family:var(--mono);">// additional language features</div>
-    <div class="g4">
-      <div class="card">
-        <h3><code>function</code> + <code>return</code></h3>
-        <p>Full user-defined functions with parameters, closures, and return values — reusable logic anywhere in your program.</p>
-      </div>
-      <div class="card">
-        <h3><code>extern</code> keyword</h3>
-        <p>Import any Python module directly: <code>extern json</code>, <code>extern requests</code>. Full access to Python's ecosystem from inside Eulyph.</p>
-      </div>
-      <div class="card">
-        <h3><code>:</code> clone operator</h3>
-        <p>Creates a deep copy of any object — contexts, environments, JSON — so you can branch logic safely without mutating the original.</p>
-      </div>
-      <div class="card">
-        <h3><code>env()</code> sandbox</h3>
-        <p>Spin up a Python execution environment from within Eulyph. <code>py.exec()</code> and <code>py.eval()</code> run code in an isolated, secure sandbox.</p>
-      </div>
-    </div>
-  </section>
+  </div>
+</section>
 
-  <hr class="divider">
-
-  <!-- ENGINE -->
-  <section id="engine">
-    <div class="eyebrow">// the codebase — built from scratch</div>
-    <div class="sec-title">Eight files. One complete language.</div>
-    <div class="sec-desc">Eulyph is hand-crafted with no language framework shortcuts. Every component — from tokenizer to runtime — is purpose-built to handle both the AI "fluid" track and the Python "rigid" track seamlessly.</div>
-    <div class="g4-sm">
-      <div class="file-card">
-        <div class="file-name">lexer.py</div>
-        <div class="file-role">The Reader</div>
-        <h3>Tokenizer</h3>
-        <p>Scans raw <code>.eulyph</code> source using regex patterns and breaks it into a clean token stream — words, strings, symbols like <code>@</code>, <code>?</code>, <code>-></code>, and <code>:</code>. Whitespace and comments are stripped.</p>
-      </div>
-      <div class="file-card">
-        <div class="file-name">parser.py</div>
-        <div class="file-role">The Organizer</div>
-        <h3>Recursive Descent Parser</h3>
-        <p>Takes tokens and builds an Abstract Syntax Tree using recursive descent — handling everything from simple variable assignments to complex chained AI expressions and function definitions.</p>
-      </div>
-      <div class="file-card">
-        <div class="file-name">ast_nodes.py</div>
-        <div class="file-role">The Blueprints</div>
-        <h3>AST Node Definitions</h3>
-        <p>Defines every instruction Eulyph understands: <code>Assignment</code>, <code>QuestionExpr</code>, <code>FunctionDefinition</code>, <code>CloneNode</code>, <code>ExternNode</code>, and more — the exact structural forms the parser fills out.</p>
-      </div>
-      <div class="file-card">
-        <div class="file-name">evaluator.py</div>
-        <div class="file-role">The Executor</div>
-        <h3>Tree-walking Evaluator</h3>
-        <p>Walks the AST node by node. Manages variable scope and closures, routes <code>@</code> calls to the local LLM, handles <code>? -></code> branching decisions, and executes built-in functions like <code>readfile()</code> and <code>writefile()</code>.</p>
-      </div>
-      <div class="file-card">
-        <div class="file-name">runtime.py</div>
-        <div class="file-role">The Workspace</div>
-        <h3>Runtime &amp; Environment</h3>
-        <p>Provides the <code>Environment</code> class (Python sandbox), the <code>Model</code> and <code>Context</code> objects, and the <code>serve_object()</code> function that spins up any object as a live Flask web API with <code>.serve()</code>.</p>
-      </div>
-      <div class="file-card">
-        <div class="file-name">types.py</div>
-        <div class="file-role">The Filing System</div>
-        <h3>Native Type System</h3>
-        <p>Defines Eulyph-native types: <code>Text</code> (strings), <code>URL</code> (auto-validated — strings starting with <code>https://</code> auto-promote), and <code>JSON</code> (native dict/list with bracket access).</p>
-      </div>
-      <div class="file-card">
-        <div class="file-name">client.py</div>
-        <div class="file-role">The Phone Line</div>
-        <h3>AI Network Client</h3>
-        <p>The direct networking link between Eulyph and the local LLM endpoint. Every <code>@</code> operator routes here — building the prompt, calling the model via HTTP, and returning the response to your program.</p>
-      </div>
-      <div class="file-card">
-        <div class="file-name">main.py / __init__.py</div>
-        <div class="file-role">The Front Door</div>
-        <h3>Entry Point</h3>
-        <p>Ties the package together. Run any <code>.eulyph</code> file with a single terminal command — it lexes, parses, and evaluates end-to-end. <code>__init__.py</code> makes the whole folder a proper Python package.</p>
-      </div>
-    </div>
-  </section>
-
-  <hr class="divider">
-
-  <!-- IT CASE STUDY -->
-  <section id="it-case">
-    <div class="eyebrow">// case study — active deployment</div>
-    <div class="sec-title">Eulyph in action: IT Helpdesk Automation</div>
-
-    <div class="case-banner">
-      <span class="case-tag">&#x1F4CC; Custom Script · Not Part of Core Download</span>
-      <p>The following is a real Eulyph script built specifically for an IT department demonstration — showing how Eulyph can be adapted to any team's needs. This script is not part of the base Eulyph language; it's an example of what you can build with it.</p>
-    </div>
-
-    <!-- Problem / Solution / Impact -->
-    <div class="impact-grid">
-      <div class="impact-card">
-        <div class="imp-icon">&#x1F4A1;</div>
-        <h3>The Problem</h3>
-        <p>Traditional IT scripts rely on exact keyword matches. A ticket saying "smashed screen" instead of "broken screen" breaks keyword-based routing rules entirely — requiring constant manual updates.</p>
-      </div>
-      <div class="impact-card">
-        <div class="imp-icon">&#x1F916;</div>
-        <h3>The Solution</h3>
-        <p>A Eulyph script uses <code>@</code> to read each ticket and <code>? -></code> to route it by meaning — not keywords. "Smashed screen" routes correctly just like "broken screen" does. Every time.</p>
-      </div>
-      <div class="impact-card">
-        <div class="imp-icon">&#x26A1;</div>
-        <h3>The Impact</h3>
-        <p>Eulyph acts as an always-on routing engine. It classifies tickets, suggests troubleshooting actions, extracts search terms, and exports results — replacing hours of manual sorting.</p>
-      </div>
-    </div>
-
-    <!-- ctx explanation — IT specific -->
-    <div class="ctx-box">
-      <div class="ctx-sym">ctx</div>
-      <h3>AI Memory / Context Object — Used in this IT Script</h3>
-      <p style="margin-bottom:10px;">In this helpdesk script, <code>ctx</code> is an AI context object that wraps the local model and holds conversation history. It's initialized once with the department routing library, then reused for every ticket — so the AI already knows the rules without being re-briefed for each request.</p>
-      <div class="mini" style="margin-top:12px;">
-        <div><span class="cm"># Connect to local model and create a persistent context</span></div>
-        <div><span class="pl">routerModel</span> = <span class="fn">model</span>(<span class="str">"http://localhost:1234/v1"</span>)</div>
-        <div><span class="pl">ctx</span> = <span class="pl">routerModel</span>.<span class="fn">context</span>()</div>
-        <div>&nbsp;</div>
-        <div><span class="cm"># ctx remembers the dept_lib across all tickets — no repetition</span></div>
-        <div><span class="pl">analysis</span> = <span class="pl">ctx</span> <span class="sym-at">@</span> <span class="str">"Review this IT ticket: '" </span>+ <span class="pl">description</span> + <span class="str">"'..."</span></div>
-      </div>
-    </div>
-
-    <!-- Live Demo split -->
-    <div class="demo-split">
-      <div>
-        <div style="font-size:13px;color:var(--text-dim);font-family:var(--mono);margin-bottom:14px;">// live_email_dispatch.eulyph — actual source</div>
-        <div class="terminal">
-          <div class="t-bar"><span class="dot dr"></span><span class="dot dy"></span><span class="dot dg"></span><span class="t-title">live_email_dispatch.eulyph</span></div>
-          <div class="t-body" style="font-size:11px;line-height:1.85;">
-            <div><span class="cm"># Set up Python sandbox for JSON + dept library</span></div>
-            <div><span class="pl">py</span> = <span class="fn">env</span>()</div>
-            <div><span class="pl">py</span>.<span class="fn">exec</span>(<span class="str">"import json"</span>)</div>
-            <div><span class="pl">dept_lib_str</span> = <span class="pl">py</span>.<span class="fn">eval</span>(<span class="str">"str(dept_lib)"</span>)</div>
-            <div>&nbsp;</div>
-            <div><span class="cm"># Connect to local AI model</span></div>
-            <div><span class="pl">routerModel</span> = <span class="fn">model</span>(<span class="str">"http://localhost:1234/v1"</span>)</div>
-            <div><span class="pl">ctx</span> = <span class="pl">routerModel</span>.<span class="fn">context</span>()</div>
-            <div>&nbsp;</div>
-            <div><span class="cm"># Define the ticket processor function</span></div>
-            <div><span class="kw">function</span> <span class="fn">process_ticket</span>(<span class="pl">description</span>, <span class="pl">ticket_id</span>, <span class="pl">expected_dept</span>) {</div>
-            <div>&nbsp;&nbsp;<span class="pl">analysis</span> = <span class="pl">ctx</span> <span class="sym-at">@</span> (<span class="str">"Review: '"</span> + <span class="pl">description</span> + <span class="str">"'. Compare against dept library..."</span>)</div>
-            <div>&nbsp;</div>
-            <div>&nbsp;&nbsp;<span class="pl">assigned_dept</span> = (<span class="pl">analysis</span> <span class="sym-q">?</span></div>
-            <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"Confidence &gt; 80?"</span> <span class="sym-ar">-></span> <span class="pl">ctx</span> <span class="sym-at">@</span> (<span class="str">"Extract dept from: "</span> + <span class="pl">analysis</span>)</div>
-            <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">else:</span> <span class="str">"IT helpdesk team"</span>)</div>
-            <div>&nbsp;</div>
-            <div>&nbsp;&nbsp;<span class="pl">confidence</span> = <span class="pl">ctx</span> <span class="sym-at">@</span> (<span class="str">"Extract confidence score from: "</span> + <span class="pl">analysis</span>)</div>
-            <div>&nbsp;&nbsp;<span class="pl">reason</span> = <span class="pl">ctx</span> <span class="sym-at">@</span> (<span class="str">"Why was this routed to "</span> + <span class="pl">assigned_dept</span> + <span class="str">"?"</span>)</div>
-            <div>&nbsp;&nbsp;<span class="kw">return</span> <span class="str">"Success"</span></div>
-            <div>}</div>
-            <div>&nbsp;</div>
-            <div><span class="cm"># Export results to JSON report</span></div>
-            <div><span class="pl">py</span>.<span class="fn">exec</span>(<span class="str">"json.dump(test_report, f, indent=4)"</span>)</div>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <div style="font-size:13px;color:var(--text-dim);font-family:var(--mono);margin-bottom:14px;">// terminal output</div>
-        <div class="terminal">
-          <div class="t-bar"><span class="dot dr"></span><span class="dot dy"></span><span class="dot dg"></span><span class="t-title">$ python main.py</span></div>
-          <div class="t-body" style="font-size:11.5px;line-height:1.9;">
-            <div><span class="out">&#x25BA; Processing ticket #1...</span></div>
-            <div>&nbsp;&nbsp;Dept: &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--red);font-weight:700;">Break-Fix team</span></div>
-            <div>&nbsp;&nbsp;Action:&nbsp;&nbsp;Check display cable</div>
-            <div>&nbsp;&nbsp;Terms: &nbsp;&nbsp;screen, display, broken</div>
-            <div>&nbsp;&nbsp;Confidence: 94</div>
-            <div>&nbsp;</div>
-            <div><span class="out">&#x25BA; Processing ticket #2...</span></div>
-            <div>&nbsp;&nbsp;Dept: &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--teal);font-weight:700;">Infrastructure team</span></div>
-            <div>&nbsp;&nbsp;Action:&nbsp;&nbsp;Restart network adapter</div>
-            <div>&nbsp;&nbsp;Terms: &nbsp;&nbsp;wifi, vpn, disconnected</div>
-            <div>&nbsp;&nbsp;Confidence: 88</div>
-            <div>&nbsp;</div>
-            <div><span class="out">&#x25BA; Processing ticket #3...</span></div>
-            <div>&nbsp;&nbsp;Dept: &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--blue);font-weight:700;">Apps team</span></div>
-            <div>&nbsp;&nbsp;Action:&nbsp;&nbsp;Reinstall application</div>
-            <div>&nbsp;&nbsp;Terms: &nbsp;&nbsp;outlook, crashing, 365</div>
-            <div>&nbsp;&nbsp;Confidence: 91 <span class="cursor"></span></div>
-          </div>
-        </div>
-
-        <div style="margin-top:12px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;">
-          <div style="font-size:11px;font-family:var(--mono);color:var(--teal);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;">8 Departments · 10 Keywords Each</div>
-          <table class="dept-table">
-            <tr><th>Department</th><th>Example Keywords</th></tr>
-            <tr><td>Apps team</td><td>outlook, erp, adobe, 365, crashing</td></tr>
-            <tr><td>Break-Fix team</td><td>projector, laptop, screen, keyboard</td></tr>
-            <tr><td>Deployment Team</td><td>ipads, imaging, upgrade, monitors</td></tr>
-            <tr><td>Infrastructure</td><td>eduroam, vpn, server, dns, wi-fi</td></tr>
-            <tr><td>Labs team</td><td>lab, spss, cad, toner, freeze</td></tr>
-            <tr><td>Macro team</td><td>sql, sync, script, database, hr</td></tr>
-            <tr><td>Online Learning</td><td>d2l, zoom, respondus, panopto</td></tr>
-            <tr><td>Phone &amp; Wiring</td><td>voip, ethernet, port, cable, phone</td></tr>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div style="background:rgba(74,158,248,0.05);border:1px solid rgba(74,158,248,0.18);border-radius:12px;padding:22px 26px;">
-      <div style="font-family:var(--mono);font-size:11px;color:var(--blue);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;">The bigger picture</div>
-      <p style="font-size:14px;color:var(--text-dim);line-height:1.8;">The IT helpdesk router is one custom script — built in a short time for one specific department. The same Eulyph operators (<code>@</code>, <code>? -></code>, <code>env()</code>, <code>.serve()</code>) can power entirely different workflows for entirely different teams. That's the point: Eulyph is a general-purpose language whose AI-native syntax makes it adaptable to any domain without starting from scratch.</p>
-    </div>
-  </section>
-
-  <hr class="divider">
-
-  <!-- ROADMAP -->
-  <section id="roadmap">
-    <div class="eyebrow">// roadmap — what eulyph can power</div>
-    <div class="sec-title">Built for any industry. Ready to adapt.</div>
-    <div class="sec-desc">Because Eulyph routes by meaning rather than hard-coded rules, the same language works across entirely different domains. Below are active work and planned future applications.</div>
-    <div class="roadmap-grid">
-      <div class="roadmap-card road-active">
-        <div class="road-status status-active">&#x25CF; Active</div>
-        <div class="road-icon">&#x1F4EC;</div>
-        <h3>IT Helpdesk Automation</h3>
-        <p>Autonomous ticket routing across 8 departments with confidence scoring, AI reasoning, and JSON export. Already demonstrated live.</p>
-      </div>
-      <div class="roadmap-card road-planned">
-        <div class="road-status status-planned">&#x25CB; Planned</div>
-        <div class="road-icon">&#x1F3E6;</div>
-        <h3>Finance &amp; Auditing</h3>
-        <p>Watch financial feeds, extract figures from messy reports, and use <code>? -></code> to autonomously flag suspicious transactions for human review — no hard-coded rules needed.</p>
-      </div>
-      <div class="roadmap-card road-planned">
-        <div class="road-status status-planned">&#x25CB; Planned</div>
-        <div class="road-icon">&#x1F3E0;</div>
-        <h3>Real Estate &amp; Business</h3>
-        <p>Extract prices, dates, and terms from unstructured property listings or contracts. Route inquiries, generate summaries, and automate follow-ups without fragile regex patterns.</p>
-      </div>
-      <div class="roadmap-card road-future">
-        <div class="road-status status-future">&#x25A1; Future</div>
-        <div class="road-icon">&#x2695;&#xFE0F;</div>
-        <h3>Healthcare (<code>std.medical</code>)</h3>
-        <p>A planned domain-specific standard library with pre-confirmed AI models trained on medical data — enabling intent-driven triage, documentation, and records routing.</p>
-      </div>
-      <div class="roadmap-card road-future">
-        <div class="road-status status-future">&#x25A1; Future</div>
-        <div class="road-icon">&#x2696;&#xFE0F;</div>
-        <h3>Legal (<code>std.legal</code>)</h3>
-        <p>Contract analysis, clause extraction, and obligation flagging — without building a specialized NLP pipeline. Eulyph reads meaning, not just keywords, across any legal document format.</p>
-      </div>
-      <div class="roadmap-card road-future">
-        <div class="road-status status-future">&#x25A1; Future</div>
-        <div class="road-icon">&#x1F680;</div>
-        <h3>Multi-language Compilation</h3>
-        <p>Prototype strategy in Eulyph, then compile the performance-critical sections into C++ or Rust — combining AI-native flexibility with systems-level speed.</p>
-      </div>
-    </div>
-  </section>
-
-  <hr class="divider">
-
-  <!-- LICENSE -->
-  <section id="license">
-    <div class="eyebrow">// licensing</div>
-    <div class="sec-title">Open for learning. Licensed for business.</div>
-    <div class="sec-desc">Eulyph is protected under a custom Non-Commercial License governed by the laws of the State of Minnesota. Use it freely for personal projects, education, and research — commercial use requires a separate agreement.</div>
+<!-- ================= LICENSE ================= -->
+<section id="license" class="case" aria-labelledby="lic-title">
+  <div class="wrap">
+    <p class="eyebrow rv">Licensing</p>
+    <h2 id="lic-title" class="rv">Free to learn. Licensed for business.</h2>
     <div class="lic-grid">
-      <div class="lic-card">
-        <h3>&#x1F513; Non-Commercial — Free</h3>
-        <p>Personal projects, education, academic research, testing, and non-profit use are covered at no cost. Distribute freely under the same license terms with proper attribution.</p>
+      <div class="lic-card rv">
+        <span class="lic-k">Non-commercial</span>
+        <h3>Free</h3>
+        <p>Personal projects, education, academic research and other non-commercial use are free under the project license.</p>
       </div>
-      <div class="lic-card">
-        <h3>&#x1F4BC; Commercial — License Required</h3>
-        <p>Any use that generates revenue, reduces costs in a business, or delivers Eulyph as part of a product or SaaS offering requires a separate written commercial license from Eulyph LLC.</p>
+      <div class="lic-card rv">
+        <span class="lic-k">Commercial</span>
+        <h3>By agreement</h3>
+        <p>Commercial use &mdash; including internal business use that saves costs &mdash; needs a separate commercial license from Eulyph LLC.</p>
       </div>
-      <div class="lic-card">
-        <h3>&#x1F4CD; Governing Law</h3>
-        <p>Governed by the laws of the State of Minnesota, USA. Disputes resolved in Minnesota courts. Includes standard no-warranty and limitation-of-liability provisions.</p>
-      </div>
-    </div>
-  </section>
-
-  <hr class="divider">
-
-  <!-- FAQ -->
-  <section id="faq">
-    <div class="eyebrow">// faq</div>
-    <div class="sec-title">Common questions</div>
-    <div class="faq">
-      <div class="faq-item" onclick="this.classList.toggle('open')">
-        <div class="faq-q">Why build a new language instead of just adding AI to Python? <span class="faq-arrow">&#x276F;</span></div>
-        <div class="faq-a">Eulyph treats AI as a native part of the language — not a library call. The <code>@</code> and <code>? -></code> operators are first-class syntax, which means developers write fluid intent rather than mechanical steps. No Python add-on can replicate a language where the grammar itself understands what you mean.</div>
-      </div>
-      <div class="faq-item" onclick="this.classList.toggle('open')">
-        <div class="faq-q">Does Eulyph send my data to the cloud? <span class="faq-arrow">&#x276F;</span></div>
-        <div class="faq-a">No. Eulyph connects to a local LLM endpoint (like LM Studio at <code>localhost:1234</code>) by default — your data stays on your machine. You can configure it to point to any compatible endpoint, but there's no cloud dependency built into the language itself.</div>
-      </div>
-      <div class="faq-item" onclick="this.classList.toggle('open')">
-        <div class="faq-q">Is the IT helpdesk script part of Eulyph's core download? <span class="faq-arrow">&#x276F;</span></div>
-        <div class="faq-a">No — <code>live_email_dispatch.eulyph</code> is a custom script built specifically for an IT department demonstration. It's a great example of what you can build with Eulyph, but the core language download is the interpreter itself (the 8 Python files). You write your own <code>.eulyph</code> scripts on top of it for whatever domain you need.</div>
-      </div>
-      <div class="faq-item" onclick="this.classList.toggle('open')">
-        <div class="faq-q">Can Eulyph work with existing Python libraries? <span class="faq-arrow">&#x276F;</span></div>
-        <div class="faq-a">Yes. The <code>extern</code> keyword imports any Python module directly into Eulyph. The <code>env()</code> sandbox lets you run arbitrary Python via <code>py.exec()</code> and retrieve values with <code>py.eval()</code>. Eulyph has full access to Python's ecosystem without sacrificing its own clean syntax.</div>
-      </div>
-      <div class="faq-item" onclick="this.classList.toggle('open')">
-        <div class="faq-q">How do I run a .eulyph file? <span class="faq-arrow">&#x276F;</span></div>
-        <div class="faq-a">Clone the repo from GitHub, install Python 3.10+, Flask, and requests, start your local LLM endpoint, and run <code>python main.py</code> from the project root. Point it at your <code>.eulyph</code> file and you're live. Full setup instructions are in the GitHub repo.</div>
+      <div class="lic-card rv">
+        <span class="lic-k">Governing law</span>
+        <h3>Minnesota</h3>
+        <p>The license is governed by the laws of the State of Minnesota, USA.</p>
       </div>
     </div>
-  </section>
-
-  <hr class="divider">
-
-  <!-- TEAM -->
-  <section id="team">
-    <div class="eyebrow">// the team</div>
-    <div class="sec-title">Built by</div>
-    <div class="team-chips">
-      <div class="chip"><div class="avatar">IH</div> Isaiah Huus</div>
-      <div class="chip"><div class="avatar">JZ</div> James Zook</div>
-      <div class="chip"><div class="avatar">AI</div> Abid Imtiaz</div>
-    </div>
-    <span class="pill pill-teal" style="font-size:12px;">&#x1F512; Eulyph LLC · Non-Commercial License · All commercial rights reserved</span>
-  </section>
-
-  <!-- GH BANNER -->
-  <div class="gh-banner">
-    <div>
-      <h3>Ready to build with Eulyph?</h3>
-      <p>View the source, explore the codebase, and download the package — all on GitHub.</p>
-    </div>
-    <a href="https://github.com/YOUR-USERNAME/YOUR-EULYPH-REPO" target="_blank" class="gh-btn">
-      <svg class="gh-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-      View on GitHub
-    </a>
   </div>
+</section>
 
-</div>
+<!-- ================= TEAM + FAQ ================= -->
+<section id="team" aria-labelledby="team-title">
+  <div class="wrap">
+    <p class="eyebrow rv">The people</p>
+    <h2 id="team-title" class="rv">Built by Eulyph LLC</h2>
+    <div class="team-row">
+      <div class="team-card rv"><b>Isaiah Huus</b><span>Eulyph LLC</span></div>
+      <div class="team-card rv"><b>James Zook</b><span>core language</span></div>
+      <div class="team-card rv"><b>Abid Imtiaz</b><span>ecosystem modules</span></div>
+    </div>
+
+    <div class="faq rv" id="faq" role="group" aria-label="Frequently asked questions">
+      <details>
+        <summary>Does my data leave my machine?</summary>
+        <p class="faq-a">Only if you choose a cloud model. Point <code>--model</code> at LM Studio or Ollama and every ticket and email stays on your hardware; <code>--model mock</code> sends nothing anywhere at all. The <code>anthropic</code> backend sends prompts to the Anthropic API &mdash; check your data-handling policy before routing real tickets through it.</p>
+      </details>
+      <details>
+        <summary>How do I run it?</summary>
+        <p class="faq-a">Python 3.10+, then <code>python -m venv .venv</code>, activate it, <code>pip install -e .</code>, and <code>eulyph run</code> <code>templates/ticket_router/router.eulyph</code> <code>--model mock</code>. That routes the ten demo tickets offline with zero API keys. The core repository is in private preview and opens to the public soon &mdash; access on request.</p>
+      </details>
+      <details>
+        <summary>Can Eulyph use Python libraries?</summary>
+        <p class="faq-a">Yes. <code>extern</code> imports any Python module, and <code>env()</code> gives a separate Python namespace with <code>set</code>, <code>get</code>, <code>call</code> and <code>eval</code>, so data crosses the boundary as data. It is a clean boundary, not a security sandbox &mdash; the Python runs with your privileges, so only run code you wrote or reviewed. Model output is never interpolated into Python source.</p>
+      </details>
+      <details>
+        <summary>Is the ticket router part of the core language?</summary>
+        <p class="faq-a">No &mdash; it is a template built on top of the core. One script serves every company; you tailor it by editing a single JSON config file with your departments, keywords, threshold and destinations. The language itself is the two tracks, the two operators and the 43 builtins.</p>
+      </details>
+      <details>
+        <summary>What keeps the model from misrouting things?</summary>
+        <p class="faq-a">Three rails. A guard accepts only labels that exactly match a configured department, so a ticket cannot talk its way onto an unlisted team. A confidence threshold sends every unsure decision to a human queue. And code the model writes is saved to disk for review &mdash; it never runs in the same run that produced it.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+</main>
 
 <footer>
-  <span>Eulyph</span> &mdash; AI-Native Programming Language &mdash;
-  <a href="https://github.com/YOUR-USERNAME/YOUR-EULYPH-REPO" target="_blank">GitHub</a> &mdash;
-  &copy; 2026 Eulyph LLC &mdash; Non-Commercial License
+  <div class="wrap foot-inner">
+    <div>
+      <p class="foot-brand">Eu<em>lyph</em></p>
+      <p>The AI-native programming language.</p>
+    </div>
+    <p><a href="https://github.com/IsaiahHuus/eulyph-site" rel="noopener">GitHub</a> &nbsp;&middot;&nbsp; <a href="#quickstart">Quickstart</a> &nbsp;&middot;&nbsp; <a href="#license">Licensing</a></p>
+    <p class="foot-meta">&copy; 2026 Eulyph LLC &middot; free for non-commercial use &middot; commercial licensing by agreement &middot; Minnesota, USA</p>
+  </div>
 </footer>
 
+<script>
+(function(){
+  var d=document;
+  d.documentElement.classList.add('js');
+  var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- scroll reveals: content is never stuck hidden ----
+     .rv elements are fully visible by default; the entrance class is added
+     only when JS runs, only without reduced motion, and only for elements
+     that start below the fold. A resize/orientation sweep frees anything
+     the observer might miss. */
+  var vh0=window.innerHeight;
+  if(!rm&&vh0>120&&'IntersectionObserver' in window){
+    var pending=[];
+    var reveal=function(el){
+      el.classList.add('in');
+      var i=pending.indexOf(el);
+      if(i>-1)pending.splice(i,1);
+    };
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){io.unobserve(e.target);reveal(e.target);}
+      });
+    },{threshold:0.05,rootMargin:'0px 0px -5% 0px'});
+    Array.prototype.forEach.call(d.querySelectorAll('.rv'),function(el){
+      var r=el.getBoundingClientRect();
+      if(r.top<vh0*0.96)return;              /* in the initial viewport: appears immediately */
+      el.classList.add('rv-init');
+      pending.push(el);
+      io.observe(el);
+    });
+    var sweep=function(){
+      pending.slice().forEach(function(el){
+        var r=el.getBoundingClientRect();
+        if(r.top<window.innerHeight&&r.bottom>0){io.unobserve(el);reveal(el);}
+      });
+    };
+    var st;
+    window.addEventListener('resize',function(){clearTimeout(st);st=setTimeout(sweep,150);});
+    window.addEventListener('orientationchange',function(){setTimeout(sweep,200);});
+    window.addEventListener('pageshow',function(){setTimeout(sweep,60);});
+  }
+
+  /* ---- sticky nav: mark the section in view ---- */
+  var navLinks=Array.prototype.slice.call(d.querySelectorAll('.site-head nav a[href^="#"]'));
+  var navSecs=navLinks.map(function(a){return d.getElementById(a.getAttribute('href').slice(1));});
+  function spy(){
+    var mark=window.innerHeight*0.38,cur='';
+    navSecs.forEach(function(s){if(s&&s.getBoundingClientRect().top<=mark)cur=s.id;});
+    navLinks.forEach(function(a){
+      var on=!!cur&&a.getAttribute('href')==='#'+cur;
+      a.classList.toggle('active',on);
+      if(on)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current');
+    });
+  }
+  var ticking=false;
+  window.addEventListener('scroll',function(){
+    if(!ticking){ticking=true;requestAnimationFrame(function(){ticking=false;spy();});}
+  },{passive:true});
+  spy();
+
+  /* ---- copy button on the quickstart commands (plain text without JS) ---- */
+  var qsPre=d.getElementById('qs-pre'),qsHead=d.getElementById('qs-head');
+  if(qsPre&&qsHead){
+    var btn=d.createElement('button');
+    btn.type='button';btn.className='copy-btn';btn.textContent='Copy';
+    btn.setAttribute('aria-label','Copy the quickstart commands');
+    qsHead.appendChild(btn);
+    btn.addEventListener('click',function(){
+      var lines=Array.prototype.map.call(qsPre.querySelectorAll('.ln'),function(l){
+        return l.textContent.replace(/ /g,'');
+      });
+      var txt=lines.join('\n').replace(/\n{3,}/g,'\n\n').trim()+'\n';
+      var ok=function(){
+        btn.classList.add('done');btn.textContent='Copied';
+        setTimeout(function(){btn.classList.remove('done');btn.textContent='Copy';},1600);
+      };
+      var fallback=function(){
+        var ta=d.createElement('textarea');
+        ta.value=txt;ta.setAttribute('readonly','');
+        ta.style.position='fixed';ta.style.left='-9999px';
+        d.body.appendChild(ta);ta.select();
+        try{if(d.execCommand('copy'))ok();}catch(e){}
+        d.body.removeChild(ta);
+      };
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok,fallback);}
+      else{fallback();}
+    });
+  }
+
+  /* ---- case-study terminal: types the real router session once ----
+     The full transcript is in the HTML, so reduced motion, no JS or no
+     IntersectionObserver all show it immediately. */
+  var term=d.getElementById('case-term');
+  if(term&&!rm&&'IntersectionObserver' in window){
+    var finalHTML=term.innerHTML;
+    var CUR='<span class="cur"></span>';
+    var CMD='eulyph run templates/ticket_router/router.eulyph --model mock';
+    /* [pause before the line, line html] — matches the transcript above exactly */
+    var OUT=[
+      [600,''],
+      [420,'MSUM IT: routing 10 ticket(s) from the file source'],
+      [850,'101 -&gt; Apps team (100) expected Apps team <span class="ok">OK</span>'],
+      [850,'102 -&gt; Break-Fix team (100) expected Break-Fix team <span class="ok">OK</span>'],
+      [320,'<span class="dim">...</span>'],
+      [850,'110 -&gt; Infrastructure team (100) expected Infrastructure team <span class="ok">OK</span>'],
+      [320,'<span class="dim">...</span>'],
+      [650,'Model\'s first choice correct (before the threshold): <span class="hot">10\/10 (100.0%)<\/span>'],
+      [480,'Sent to IT helpdesk team by the threshold or the guard: 0'],
+      [480,'Accuracy: <span class="hot">10\/10 (100.0%)<\/span>'],
+      [480,'Assignments sent to the file source'],
+      [480,'Report written to ai_routing_results.json']
+    ];
+    var typed=false;
+    var typeSession=function(){
+      if(typed)return;typed=true;
+      term.style.minHeight=(term.offsetHeight+25)+'px';   /* room for the idle prompt: no layout jump */
+      term.setAttribute('aria-hidden','true');
+      var head='<span class="dim">$</span> ',done=[],j=0,k=0;
+      var next=function(){
+        if(k>=OUT.length){
+          setTimeout(function(){
+            term.innerHTML=finalHTML+'\n<span class="dim">$</span> '+CUR;
+            term.removeAttribute('aria-hidden');
+          },420);
+          return;
+        }
+        var step=OUT[k];k++;
+        setTimeout(function(){
+          done.push(step[1]);
+          term.innerHTML=done.join('\n')+'\n'+CUR;
+          next();
+        },step[0]);
+      };
+      term.innerHTML=head+CUR;
+      (function tick(){
+        j++;
+        term.innerHTML=head+CMD.slice(0,j)+CUR;
+        if(j<CMD.length){setTimeout(tick,22);}
+        else{done.push(head+CMD);next();}
+      })();
+    };
+    var tio=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){tio.disconnect();typeSession();}
+      });
+    },{threshold:0.35,rootMargin:'0px 0px -40px 0px'});
+    tio.observe(term);
+  }
+})();
+</script>
 </body>
 </html>
